@@ -17,20 +17,12 @@
 }
 
 @layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-card bg-primary px-5 py-2.5 font-medium text-white transition-colors hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-50;
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-card border border-border bg-surface px-5 py-2.5 font-medium text-text transition-colors hover:border-primary/50;
-  }
-
   .card {
     @apply rounded-card border border-border bg-surface;
   }
 
   .input {
-    @apply w-full rounded-card border border-border bg-background px-4 py-2.5 text-text placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+    @apply w-full rounded-xl border border-border bg-background px-4 py-2.5 text-text placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
   }
 
   .label {
@@ -40,4 +32,122 @@
   .badge-condition {
     @apply inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 text-xs font-medium text-text-muted;
   }
+}
+
+/* -----------------------------------------------------------------------
+   Botões "liquid glass" — pílula de vidro fosco com brilho especular.
+   Usados através do componente <Button>/<ButtonLink> (components/ui/Button.tsx).
+   Não usar @apply aqui: gradientes, backdrop-filter e o pseudo-elemento de
+   brilho precisam de propriedades CSS diretas.
+   ----------------------------------------------------------------------- */
+.btn-glass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #f5f7fa;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out,
+    filter 180ms ease-out,
+    background 180ms ease-out,
+    border-color 180ms ease-out;
+}
+
+.btn-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.btn-glass__label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-glass:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none !important;
+  filter: none !important;
+}
+
+.btn-glass:not(:disabled):hover {
+  transform: scale(1.02);
+  filter: brightness(1.08);
+}
+
+.btn-glass:not(:disabled):active {
+  transform: scale(0.97);
+  filter: brightness(0.98);
+}
+
+.btn-glass--primary {
+  background: linear-gradient(135deg, rgba(22, 119, 255, 0.78), rgba(59, 140, 255, 0.55));
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 10px 26px -10px rgba(22, 119, 255, 0.55),
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.btn-glass--primary:not(:disabled):hover {
+  box-shadow:
+    0 14px 32px -10px rgba(22, 119, 255, 0.7),
+    0 3px 10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.btn-glass--primary:not(:disabled):active {
+  box-shadow:
+    0 6px 16px -8px rgba(22, 119, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-glass--secondary {
+  background: linear-gradient(135deg, rgba(167, 175, 188, 0.18), rgba(167, 175, 188, 0.06));
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 22px -12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.btn-glass--secondary:not(:disabled):hover {
+  background: linear-gradient(135deg, rgba(167, 175, 188, 0.24), rgba(167, 175, 188, 0.1));
+  box-shadow:
+    0 10px 26px -12px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+.btn-glass--secondary:not(:disabled):active {
+  box-shadow: 0 4px 12px -8px rgba(0, 0, 0, 0.4);
+}
+
+.btn-glass--outline {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.btn-glass--outline:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(59, 140, 255, 0.45);
+}
+.btn-glass--outline:not(:disabled):active {
+  background: rgba(255, 255, 255, 0.04);
 }

@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice, ORDER_STATUS_LABELS, PAYMENT_METHOD_LABELS } from "@/lib/format";
 import { ClearCartOnMount } from "@/components/checkout/ClearCartOnMount";
+import { ButtonLink } from "@/components/ui/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -92,9 +92,9 @@ export default async function OrderSuccessPage({
       </div>
 
       <div className="mt-8 text-center">
-        <Link href="/catalogo" className="btn-secondary">
+        <ButtonLink href="/catalogo" variant="secondary">
           Continuar a comprar
-        </Link>
+        </ButtonLink>
       </div>
     </div>
   );

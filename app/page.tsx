@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/ProductCard";
+import { ButtonLink } from "@/components/ui/Button";
 import { CATEGORIES_SEED } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
@@ -44,12 +45,12 @@ export default async function HomePage() {
               recondicionados pela nossa equipa antes de chegarem até ti.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/catalogo" className="btn-primary">
+              <ButtonLink href="/catalogo" variant="primary">
                 Ver catálogo
-              </Link>
-              <Link href="/sobre" className="btn-secondary">
+              </ButtonLink>
+              <ButtonLink href="/sobre" variant="secondary">
                 Como funciona
-              </Link>
+              </ButtonLink>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">

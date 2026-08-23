@@ -12,7 +12,7 @@ export function CartButton() {
   return (
     <Link
       href="/carrinho"
-      className="relative flex items-center gap-2 rounded-card border border-border px-3 py-2 text-sm transition-colors hover:border-primary/50"
+      className="relative flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm backdrop-blur-md transition-all duration-200 ease-out hover:border-primary/40 hover:bg-white/[0.06] active:scale-[0.97]"
       aria-label="Carrinho de compras"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">

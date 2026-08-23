@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ButtonLink } from "@/components/ui/Button";
 import { useCartStore } from "@/lib/cart-store";
 import { useMounted } from "@/lib/use-mounted";
 import { formatPrice, CONDITION_LABELS } from "@/lib/format";
@@ -22,9 +23,9 @@ export default function CarrinhoPage() {
       <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
         <h1 className="text-2xl font-bold">O teu carrinho está vazio</h1>
         <p className="mt-2 text-text-muted">Explora o nosso catálogo e encontra o teu próximo produto PlayStation.</p>
-        <Link href="/catalogo" className="btn-primary mt-6 inline-flex">
+        <ButtonLink href="/catalogo" className="mt-6">
           Ver catálogo
-        </Link>
+        </ButtonLink>
       </div>
     );
   }
@@ -96,9 +97,9 @@ export default function CarrinhoPage() {
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>
-          <Link href="/checkout" className="btn-primary mt-2 w-full">
+          <ButtonLink href="/checkout" className="mt-2 w-full">
             Finalizar compra
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     </div>

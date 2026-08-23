@@ -7,6 +7,7 @@ import {
   PAYMENT_METHOD_LABELS,
 } from "@/lib/format";
 import { updateOrderStatus } from "@/app/admin/actions";
+import { Button } from "@/components/ui/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -98,9 +99,9 @@ export default async function AdminEncomendaPage({
                 </option>
               ))}
             </select>
-            <button type="submit" className="btn-primary w-full">
+            <Button type="submit" variant="primary" className="w-full">
               Atualizar estado
-            </button>
+            </Button>
           </form>
         </div>
       </div>

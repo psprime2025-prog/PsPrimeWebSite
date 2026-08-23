@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { Elements } from "@stripe/react-stripe-js";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { useCartStore } from "@/lib/cart-store";
 import { useMounted } from "@/lib/use-mounted";
 import { getStripe } from "@/lib/stripe-client";
@@ -88,9 +88,9 @@ export default function CheckoutPage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
         <h1 className="text-2xl font-bold">O teu carrinho está vazio</h1>
-        <Link href="/catalogo" className="btn-primary mt-6 inline-flex">
+        <ButtonLink href="/catalogo" className="mt-6">
           Ver catálogo
-        </Link>
+        </ButtonLink>
       </div>
     );
   }
@@ -194,9 +194,9 @@ export default function CheckoutPage() {
 
               {error && <p className="text-sm text-red-400">{error}</p>}
 
-              <button type="submit" disabled={loading} className="btn-primary w-full">
+              <Button type="submit" disabled={loading} variant="primary" className="w-full">
                 {loading ? "A processar..." : "Continuar para pagamento"}
-              </button>
+              </Button>
             </form>
           )}
 

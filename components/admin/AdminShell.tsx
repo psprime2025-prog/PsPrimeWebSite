@@ -23,7 +23,7 @@ function AdminNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`shrink-0 rounded-card px-3 py-2 text-sm ${
+            className={`shrink-0 rounded-full px-3 py-2 text-sm transition-colors ${
               pathname === item.href
                 ? "bg-primary/10 text-primary-light"
                 : "text-text-muted hover:text-text"
@@ -34,7 +34,7 @@ function AdminNav() {
         ))}
         <button
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
-          className="shrink-0 rounded-card px-3 py-2 text-left text-sm text-text-muted hover:text-text"
+          className="shrink-0 rounded-full px-3 py-2 text-left text-sm text-text-muted transition-colors hover:text-text"
         >
           Terminar sessão
         </button>

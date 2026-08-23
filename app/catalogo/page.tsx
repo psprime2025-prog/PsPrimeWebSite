@@ -93,7 +93,7 @@ export default async function CatalogoPage({
                   <a
                     key={p}
                     href={`/catalogo?${sp.toString()}`}
-                    className={`flex h-9 w-9 items-center justify-center rounded-card border ${
+                    className={`flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.97] ${
                       p === page ? "border-primary text-primary-light" : "border-border text-text-muted"
                     }`}
                   >

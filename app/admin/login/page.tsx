@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Button } from "@/components/ui/Button";
 
 function LoginForm() {
   const router = useRouter();
@@ -59,9 +60,9 @@ function LoginForm() {
           />
         </div>
         {error && <p className="text-sm text-red-400">{error}</p>}
-        <button type="submit" disabled={loading} className="btn-primary w-full">
+        <Button type="submit" disabled={loading} variant="primary" className="w-full">
           {loading ? "A entrar..." : "Entrar"}
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -28,7 +28,12 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
       },
       borderRadius: {
-        card: "0.75rem",
+        // Escala global de cantos arredondados — nada de cantos vivos no site.
+        // Cards/modais/banners: rounded-2xl. Inputs: rounded-xl (Tailwind nativo). Botões/badges: rounded-full.
+        card: "1rem",
+      },
+      backdropBlur: {
+        glass: "14px",
       },
     },
   },

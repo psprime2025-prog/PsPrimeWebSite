@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/Button";
 import { CONDITION_LABELS, GENERATION_LABELS } from "@/lib/format";
 
 interface Category {
@@ -140,9 +141,9 @@ export function ProductForm({
         )}
       </div>
 
-      <button type="submit" className="btn-primary w-full">
+      <Button type="submit" variant="primary" className="w-full">
         Guardar produto
-      </button>
+      </Button>
     </form>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
 import { useCartStore } from "@/lib/cart-store";
 
 interface Props {
@@ -34,9 +35,9 @@ export function AddToCartForm(props: Props) {
 
   if (outOfStock) {
     return (
-      <button disabled className="btn-secondary w-full cursor-not-allowed opacity-60">
+      <Button disabled variant="secondary" className="w-full">
         Produto esgotado
-      </button>
+      </Button>
     );
   }
 
@@ -61,12 +62,12 @@ export function AddToCartForm(props: Props) {
         <span className="text-xs text-text-muted">{props.stock} em stock</span>
       </div>
       <div className="flex flex-col gap-2 sm:flex-row">
-        <button onClick={handleAdd} className="btn-secondary flex-1">
+        <Button onClick={handleAdd} variant="secondary" className="flex-1">
           {added ? "Adicionado ✓" : "Adicionar ao carrinho"}
-        </button>
-        <button onClick={handleBuyNow} className="btn-primary flex-1">
+        </Button>
+        <Button onClick={handleBuyNow} variant="primary" className="flex-1">
           Comprar agora
-        </button>
+        </Button>
       </div>
     </div>
   );

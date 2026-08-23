@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import type Stripe from "stripe";
+import { Button } from "@/components/ui/Button";
 
 interface Props {
   orderId: string;
@@ -140,9 +141,9 @@ export function PaymentStep({ orderId, paymentMethod, total }: Props) {
     <form onSubmit={handleSubmit} className="card space-y-4 p-6">
       <PaymentElement />
       {error && <p className="text-sm text-red-400">{error}</p>}
-      <button type="submit" disabled={!stripe || submitting} className="btn-primary w-full">
+      <Button type="submit" disabled={!stripe || submitting} variant="primary" className="w-full">
         {submitting ? "A processar..." : `Pagar ${total.toFixed(2)} €`}
-      </button>
+      </Button>
     </form>
   );
 }

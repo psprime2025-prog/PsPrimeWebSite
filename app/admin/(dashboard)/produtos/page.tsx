@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatPrice, CONDITION_LABELS, GENERATION_LABELS } from "@/lib/format";
 import { deleteProduct } from "@/app/admin/actions";
+import { ButtonLink } from "@/components/ui/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -15,9 +16,9 @@ export default async function AdminProdutosPage() {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Produtos</h1>
-        <Link href="/admin/produtos/novo" className="btn-primary">
+        <ButtonLink href="/admin/produtos/novo" variant="primary">
           Novo produto
-        </Link>
+        </ButtonLink>
       </div>
 
       <div className="card mt-6 overflow-x-auto">

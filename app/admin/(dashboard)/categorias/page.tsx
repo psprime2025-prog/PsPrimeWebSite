@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { createCategory, deleteCategory } from "@/app/admin/actions";
+import { Button } from "@/components/ui/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -53,9 +54,9 @@ export default async function AdminCategoriasPage() {
             <label className="label">Ordem</label>
             <input type="number" name="order" defaultValue={0} className="input" />
           </div>
-          <button type="submit" className="btn-primary w-full">
+          <Button type="submit" variant="primary" className="w-full">
             Adicionar
-          </button>
+          </Button>
         </form>
       </div>
     </div>
