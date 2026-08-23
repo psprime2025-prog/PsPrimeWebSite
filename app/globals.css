@@ -8,7 +8,18 @@
   }
 
   body {
-    @apply bg-background text-text antialiased;
+    @apply text-text antialiased;
+    /* Gradiente subtil de fundo (substitui a cor sólida): leve halo azul no
+       topo que esbate para o grafite/preto da paleta antes de meio da página. */
+    background-color: #05070b;
+    background-image:
+      radial-gradient(60% 50% at 50% 0%, rgba(22, 119, 255, 0.16), transparent 70%),
+      linear-gradient(180deg, rgba(11, 15, 22, 0.85) 0%, rgba(5, 7, 11, 0) 60%);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size:
+      100% 1400px,
+      100% 900px;
   }
 
   ::selection {
@@ -150,4 +161,64 @@
 }
 .btn-glass--outline:not(:disabled):active {
   background: rgba(255, 255, 255, 0.04);
+}
+
+.btn-glass--light {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 20px -12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.btn-glass--light:not(:disabled):hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 10px 24px -12px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-glass--light:not(:disabled):active {
+  box-shadow: 0 4px 12px -8px rgba(0, 0, 0, 0.4);
+}
+
+.btn-glass--sm {
+  padding: 0.4375rem 1.125rem;
+  font-size: 0.8125rem;
+  gap: 0.375rem;
+}
+
+/* -----------------------------------------------------------------------
+   Símbolos PlayStation flutuantes — puramente decorativos (ver
+   components/FloatingSymbols.tsx). Cada símbolo tem a sua própria duração
+   para não ficarem sincronizados.
+   ----------------------------------------------------------------------- */
+@keyframes float-a {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(-4deg); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(16px) rotate(5deg); }
+}
+@keyframes float-c {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+@keyframes float-d {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(14px) rotate(-3deg); }
+}
+
+.floating-symbol {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-symbol {
+    animation: none !important;
+  }
 }

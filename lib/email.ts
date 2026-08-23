@@ -62,3 +62,46 @@ export async function sendOrderConfirmationEmail(orderId: string) {
     html,
   });
 }
+
+interface SellRequestData {
+  nome: string;
+  contacto: string;
+  modelo: string;
+  estado: string;
+  mensagem: string;
+  fotos: { filename: string; content: Buffer; contentType: string }[];
+}
+
+export async function sendSellRequestEmail(data: SellRequestData) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY não configurada — pedido de avaliação não enviado.");
+    return;
+  }
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#111;">
+      <h2>Novo pedido de avaliação — Vender consola</h2>
+      <table style="width:100%;border-collapse:collapse;margin-top:16px;">
+        <tr><td style="padding:6px 0;font-weight:600;">Nome</td><td style="padding:6px 0;">${data.nome}</td></tr>
+        <tr><td style="padding:6px 0;font-weight:600;">Contacto</td><td style="padding:6px 0;">${data.contacto}</td></tr>
+        <tr><td style="padding:6px 0;font-weight:600;">Modelo</td><td style="padding:6px 0;">${data.modelo}</td></tr>
+        <tr><td style="padding:6px 0;font-weight:600;">Estado</td><td style="padding:6px 0;">${data.estado}</td></tr>
+      </table>
+      ${data.mensagem ? `<p style="margin-top:16px;"><strong>Detalhes adicionais:</strong><br/>${data.mensagem.replace(/\n/g, "<br/>")}</p>` : ""}
+      <p style="margin-top:16px;font-size:13px;color:#666;">${data.fotos.length} foto(s) em anexo.</p>
+    </div>
+  `;
+
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to: STORE.supportEmail,
+    replyTo: data.contacto.includes("@") ? data.contacto : undefined,
+    subject: `Pedido de avaliação: ${data.modelo}`,
+    html,
+    attachments: data.fotos.map((f) => ({
+      filename: f.filename,
+      content: f.content,
+      contentType: f.contentType,
+    })),
+  });
+}

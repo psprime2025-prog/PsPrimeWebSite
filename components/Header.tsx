@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CartButton } from "@/components/CartButton";
 import { SearchBar } from "@/components/SearchBar";
+import { ButtonLink } from "@/components/ui/Button";
 
 const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo" },
@@ -20,11 +21,11 @@ export function Header() {
           <span className="hidden text-lg font-bold tracking-tight sm:block">PsPrime</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm text-text-muted lg:flex">
+        <nav className="hidden items-center gap-2 lg:flex">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="transition-colors hover:text-text">
+            <ButtonLink key={link.href} href={link.href} variant="light" size="sm">
               {link.label}
-            </Link>
+            </ButtonLink>
           ))}
         </nav>
 
@@ -38,11 +39,11 @@ export function Header() {
       <div className="border-t border-border px-4 py-2 sm:hidden">
         <SearchBar />
       </div>
-      <nav className="flex items-center gap-4 overflow-x-auto border-t border-border px-4 py-2 text-sm text-text-muted lg:hidden">
+      <nav className="flex items-center gap-2 overflow-x-auto border-t border-border px-4 py-2.5 lg:hidden">
         {NAV_LINKS.map((link) => (
-          <Link key={link.href} href={link.href} className="shrink-0 transition-colors hover:text-text">
+          <ButtonLink key={link.href} href={link.href} variant="light" size="sm" className="shrink-0">
             {link.label}
-          </Link>
+          </ButtonLink>
         ))}
       </nav>
     </header>

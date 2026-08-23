@@ -10,6 +10,7 @@ const LEGAL_LINKS = [
 
 const INFO_LINKS = [
   { href: "/sobre", label: "Sobre Nós" },
+  { href: "/vender", label: "Vender a tua consola" },
   { href: "/contactos", label: "Contactos" },
   { href: "/faq", label: "FAQ" },
 ];

@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/ProductCard";
 import { ButtonLink } from "@/components/ui/Button";
+import { FloatingSymbols } from "@/components/FloatingSymbols";
 import { CATEGORIES_SEED } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
@@ -30,10 +32,11 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="border-b border-border bg-surface">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div>
-            <span className="badge-condition mb-4 inline-flex items-center gap-1.5 border-success/40 text-success">
+      <section className="relative overflow-hidden border-b border-border bg-surface">
+        <FloatingSymbols />
+        <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <div className="relative z-10 flex flex-col justify-center">
+            <span className="badge-condition mb-4 inline-flex w-fit items-center gap-1.5 border-success/40 text-success">
               Produtos seminovos testados
             </span>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
@@ -46,28 +49,48 @@ export default async function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/catalogo" variant="primary">
-                Ver catálogo
+                Comprar consola já
               </ButtonLink>
-              <ButtonLink href="/sobre" variant="secondary">
-                Como funciona
+              <ButtonLink href="/vender" variant="light">
+                Vender consola
               </ButtonLink>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            {CATEGORIES_SEED.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/catalogo?categoria=${cat.slug}`}
-                className="card flex aspect-square flex-col items-center justify-center gap-2 p-4 text-center transition-colors hover:border-primary/50"
-              >
-                <span className="font-semibold">{cat.name}</span>
-              </Link>
-            ))}
+
+          <div className="relative min-h-[320px] overflow-hidden rounded-card lg:min-h-[480px]">
+            {/* TODO: substituir por uma fotografia real da PsPrime (produto, equipa ou loja) */}
+            <Image
+              src="/hero.jpg"
+              alt="Consolas e acessórios PlayStation PsPrime"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            {/* Overlay escuro para profundidade + transição suave para o lado do texto */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-surface to-transparent lg:hidden" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-surface to-transparent lg:block" />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <h2 className="mb-6 text-xl font-bold">Categorias</h2>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {CATEGORIES_SEED.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/catalogo?categoria=${cat.slug}`}
+              className="card flex aspect-square flex-col items-center justify-center gap-2 p-4 text-center transition-colors hover:border-primary/50"
+            >
+              <span className="font-semibold">{cat.name}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold">Destaques</h2>
           <Link href="/catalogo" className="text-sm text-primary-light hover:underline">
