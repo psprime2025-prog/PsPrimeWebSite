@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import { formatPrice, CONDITION_LABELS, GENERATION_LABELS } from "@/lib/format";
+import { formatPrice, CONDITION_LABELS, GENERATION_LABELS, STORAGE_LABELS } from "@/lib/format";
 import { AddToCartForm } from "@/components/AddToCartForm";
 import { ProductCard } from "@/components/ProductCard";
 
@@ -107,6 +107,10 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
         <div>
           <div className="flex flex-wrap gap-2">
             <span className="badge-condition">{GENERATION_LABELS[product.psGeneration]}</span>
+            {product.model && <span className="badge-condition">{product.model}</span>}
+            {product.storageCapacity && (
+              <span className="badge-condition">{STORAGE_LABELS[product.storageCapacity]}</span>
+            )}
             <span className="badge-condition">{product.category.name}</span>
             <span className="badge-condition border-success/40 text-success">
               {CONDITION_LABELS[product.condition]}

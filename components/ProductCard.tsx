@@ -9,6 +9,7 @@ export interface ProductCardData {
   price: string | number;
   condition: string;
   psGeneration: string;
+  model?: string | null;
   stock: number;
   images: { url: string; alt: string }[];
 }
@@ -43,6 +44,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex flex-wrap gap-1.5">
           <span className="badge-condition">{GENERATION_LABELS[product.psGeneration]}</span>
+          {product.model && <span className="badge-condition">{product.model}</span>}
           <span className="badge-condition">{CONDITION_LABELS[product.condition]}</span>
         </div>
         <h3 className="line-clamp-2 text-sm font-medium text-text">{product.name}</h3>

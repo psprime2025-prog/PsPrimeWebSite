@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { CONDITION_LABELS, GENERATION_LABELS } from "@/lib/format";
+import { CONDITION_LABELS, GENERATION_LABELS, STORAGE_LABELS, MODELS_BY_GENERATION } from "@/lib/format";
 
 interface Category {
   id: string;
@@ -17,6 +18,8 @@ interface ProductFormData {
   stock: number | string;
   condition: string;
   psGeneration: string;
+  model: string | null;
+  storageCapacity: string | null;
   categoryId: string;
   featured: boolean;
   active: boolean;
@@ -33,6 +36,23 @@ export function ProductForm({
   action: (formData: FormData) => void;
 }) {
   const [imageUrls, setImageUrls] = useState(product?.images.map((i) => i.url).join("\n") ?? "");
+  const [psGeneration, setPsGeneration] = useState(product?.psGeneration ?? "NA");
+  const modelOptions = MODELS_BY_GENERATION[psGeneration] ?? [];
+
+  if (categories.length === 0) {
+    return (
+      <div className="card max-w-2xl space-y-3 p-6">
+        <p className="font-medium text-yellow-200">Ainda não existem categorias.</p>
+        <p className="text-sm text-text-muted">
+          Precisas de criar pelo menos uma categoria (ex: Consolas, Comandos, Jogos, Acessórios)
+          antes de conseguires adicionar produtos.
+        </p>
+        <Link href="/admin/categorias" className="text-sm text-primary-light hover:underline">
+          Ir para Categorias →
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <form action={action} className="card max-w-2xl space-y-4 p-6">
@@ -92,8 +112,46 @@ export function ProductForm({
         </div>
         <div>
           <label className="label">Geração PlayStation</label>
-          <select required name="psGeneration" defaultValue={product?.psGeneration ?? "NA"} className="input">
+          <select
+            required
+            name="psGeneration"
+            value={psGeneration}
+            onChange={(e) => setPsGeneration(e.target.value)}
+            className="input"
+          >
             {Object.entries(GENERATION_LABELS).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="label">Modelo</label>
+          <select
+            name="model"
+            defaultValue={product?.model ?? ""}
+            disabled={modelOptions.length === 0}
+            className="input disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <option value="">
+              {modelOptions.length === 0 ? "Não aplicável" : "Seleciona..."}
+            </option>
+            {modelOptions.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="label">Armazenamento</label>
+          <select name="storageCapacity" defaultValue={product?.storageCapacity ?? ""} className="input">
+            <option value="">Não aplicável</option>
+            {Object.entries(STORAGE_LABELS).map(([value, label]) => (
               <option key={value} value={value}>
                 {label}
               </option>

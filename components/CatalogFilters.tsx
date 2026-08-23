@@ -2,10 +2,11 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { CATEGORIES_SEED } from "@/lib/constants";
-import { GENERATION_LABELS, CONDITION_LABELS } from "@/lib/format";
+import { GENERATION_LABELS, CONDITION_LABELS, STORAGE_LABELS, MODELS_BY_GENERATION } from "@/lib/format";
 
-const GENERATIONS = ["PS1", "PS2", "PS3", "PS4", "PS5"];
+const GENERATIONS = ["PS4", "PS5"];
 const CONDITIONS = ["EXCELENTE", "MUITO_BOM", "BOM"];
+const MODELS = Array.from(new Set(Object.values(MODELS_BY_GENERATION).flat()));
 
 export function CatalogFilters() {
   const router = useRouter();
@@ -26,6 +27,8 @@ export function CatalogFilters() {
   const activeCategoria = searchParams.get("categoria");
   const activeGeracao = searchParams.get("geracao");
   const activeCondicao = searchParams.get("condicao");
+  const activeModelo = searchParams.get("modelo");
+  const activeArmazenamento = searchParams.get("armazenamento");
 
   return (
     <aside className="space-y-6">
@@ -66,6 +69,48 @@ export function CatalogFilters() {
               className={`badge-condition ${activeGeracao === gen ? "border-primary text-primary-light" : ""}`}
             >
               {GENERATION_LABELS[gen]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="mb-3 text-sm font-semibold">Modelo</h3>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => updateParam("modelo", null)}
+            className={`badge-condition ${!activeModelo ? "border-primary text-primary-light" : ""}`}
+          >
+            Todos
+          </button>
+          {MODELS.map((m) => (
+            <button
+              key={m}
+              onClick={() => updateParam("modelo", m)}
+              className={`badge-condition ${activeModelo === m ? "border-primary text-primary-light" : ""}`}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="mb-3 text-sm font-semibold">Armazenamento</h3>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => updateParam("armazenamento", null)}
+            className={`badge-condition ${!activeArmazenamento ? "border-primary text-primary-light" : ""}`}
+          >
+            Todos
+          </button>
+          {Object.entries(STORAGE_LABELS).map(([value, label]) => (
+            <button
+              key={value}
+              onClick={() => updateParam("armazenamento", value)}
+              className={`badge-condition ${activeArmazenamento === value ? "border-primary text-primary-light" : ""}`}
+            >
+              {label}
             </button>
           ))}
         </div>

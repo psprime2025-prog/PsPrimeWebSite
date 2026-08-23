@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import type { OrderStatus, ProductCondition, PsGeneration } from "@prisma/client";
+import type { OrderStatus, ProductCondition, PsGeneration, StorageCapacity } from "@prisma/client";
 
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
@@ -40,6 +40,9 @@ export async function createProduct(formData: FormData) {
   const stock = Number(formData.get("stock"));
   const condition = String(formData.get("condition")) as ProductCondition;
   const psGeneration = String(formData.get("psGeneration")) as PsGeneration;
+  const model = String(formData.get("model") ?? "").trim() || null;
+  const storageCapacity = (String(formData.get("storageCapacity") ?? "").trim() ||
+    null) as StorageCapacity | null;
   const categoryId = String(formData.get("categoryId"));
   const featured = formData.get("featured") === "on";
   const imageUrls = String(formData.get("imageUrls") ?? "")
@@ -56,6 +59,8 @@ export async function createProduct(formData: FormData) {
       stock,
       condition,
       psGeneration,
+      model,
+      storageCapacity,
       categoryId,
       featured,
       images: {
@@ -77,6 +82,9 @@ export async function updateProduct(productId: string, formData: FormData) {
   const stock = Number(formData.get("stock"));
   const condition = String(formData.get("condition")) as ProductCondition;
   const psGeneration = String(formData.get("psGeneration")) as PsGeneration;
+  const model = String(formData.get("model") ?? "").trim() || null;
+  const storageCapacity = (String(formData.get("storageCapacity") ?? "").trim() ||
+    null) as StorageCapacity | null;
   const categoryId = String(formData.get("categoryId"));
   const featured = formData.get("featured") === "on";
   const active = formData.get("active") === "on";
@@ -96,6 +104,8 @@ export async function updateProduct(productId: string, formData: FormData) {
         stock,
         condition,
         psGeneration,
+        model,
+        storageCapacity,
         categoryId,
         featured,
         active,

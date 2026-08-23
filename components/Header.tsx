@@ -1,16 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Suspense } from "react";
 import { CartButton } from "@/components/CartButton";
 import { SearchBar } from "@/components/SearchBar";
-import { ButtonLink } from "@/components/ui/Button";
-
-const NAV_LINKS = [
-  { href: "/catalogo", label: "Catálogo" },
-  { href: "/catalogo?categoria=consolas", label: "Consolas" },
-  { href: "/catalogo?categoria=comandos", label: "Comandos" },
-  { href: "/catalogo?categoria=jogos", label: "Jogos" },
-  { href: "/catalogo?categoria=acessorios", label: "Acessórios" },
-];
+import { CatalogMenu } from "@/components/CatalogMenu";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export function Header() {
   return (
@@ -21,12 +15,10 @@ export function Header() {
           <span className="hidden text-lg font-bold tracking-tight sm:block">PsPrime</span>
         </Link>
 
-        <nav className="hidden items-center gap-2 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <ButtonLink key={link.href} href={link.href} variant="light" size="sm">
-              {link.label}
-            </ButtonLink>
-          ))}
+        <nav className="hidden lg:flex">
+          <Suspense fallback={null}>
+            <CatalogMenu />
+          </Suspense>
         </nav>
 
         <div className="ml-auto flex flex-1 items-center justify-end gap-3 sm:flex-initial">
@@ -34,18 +26,14 @@ export function Header() {
             <SearchBar />
           </div>
           <CartButton />
+          <Suspense fallback={null}>
+            <MobileMenu />
+          </Suspense>
         </div>
       </div>
       <div className="border-t border-border px-4 py-2 sm:hidden">
         <SearchBar />
       </div>
-      <nav className="flex items-center gap-2 overflow-x-auto border-t border-border px-4 py-2.5 lg:hidden">
-        {NAV_LINKS.map((link) => (
-          <ButtonLink key={link.href} href={link.href} variant="light" size="sm" className="shrink-0">
-            {link.label}
-          </ButtonLink>
-        ))}
-      </nav>
     </header>
   );
 }

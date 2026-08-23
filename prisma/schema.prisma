@@ -16,9 +16,6 @@ datasource db {
 // ---------------------------------------------------------------------------
 
 enum PsGeneration {
-  PS1
-  PS2
-  PS3
   PS4
   PS5
   NA // acessórios/produtos não específicos de uma geração
@@ -28,6 +25,12 @@ enum ProductCondition {
   EXCELENTE
   MUITO_BOM
   BOM
+}
+
+enum StorageCapacity {
+  GB500 @map("500GB")
+  TB1   @map("1TB")
+  TB2   @map("2TB")
 }
 
 model Category {
@@ -49,6 +52,8 @@ model Product {
   stock         Int              @default(0)
   condition     ProductCondition
   psGeneration  PsGeneration     @default(NA)
+  model         String? // ex: "Slim", "Pro", "Digital Edition" — depende da geração
+  storageCapacity StorageCapacity?
   images        ProductImage[]
   featured      Boolean          @default(false)
   active        Boolean          @default(true)

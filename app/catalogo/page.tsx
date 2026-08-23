@@ -17,6 +17,8 @@ interface CatalogSearchParams {
   categoria?: string;
   geracao?: string;
   condicao?: string;
+  modelo?: string;
+  armazenamento?: string;
   ordenar?: string;
   q?: string;
   pagina?: string;
@@ -35,6 +37,9 @@ export default async function CatalogoPage({
   if (params.geracao) where.psGeneration = params.geracao as Prisma.EnumPsGenerationFilter["equals"];
   if (params.condicao)
     where.condition = params.condicao as Prisma.EnumProductConditionFilter["equals"];
+  if (params.modelo) where.model = params.modelo;
+  if (params.armazenamento)
+    where.storageCapacity = params.armazenamento as Prisma.EnumStorageCapacityNullableFilter["equals"];
   if (params.q) where.name = { contains: params.q, mode: "insensitive" };
 
   const orderBy: Prisma.ProductOrderByWithRelationInput =

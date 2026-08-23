@@ -22,12 +22,20 @@ export const CONDITION_LABELS: Record<string, string> = {
 };
 
 export const GENERATION_LABELS: Record<string, string> = {
-  PS1: "PlayStation 1",
-  PS2: "PlayStation 2",
-  PS3: "PlayStation 3",
   PS4: "PlayStation 4",
   PS5: "PlayStation 5",
   NA: "Geral",
+};
+
+export const STORAGE_LABELS: Record<string, string> = {
+  GB500: "500GB",
+  TB1: "1TB",
+  TB2: "2TB",
+};
+
+export const MODELS_BY_GENERATION: Record<string, string[]> = {
+  PS4: ["Fat", "Slim", "Pro"],
+  PS5: ["Standard", "Digital Edition", "Slim", "Pro"],
 };
 
 export const ORDER_STATUS_LABELS: Record<string, string> = {

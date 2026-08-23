@@ -189,6 +189,14 @@
   gap: 0.375rem;
 }
 
+/* Estado ativo (item de navegação da página atual) — some com qualquer variante. */
+.btn-glass--active {
+  border-color: rgba(59, 140, 255, 0.55) !important;
+  box-shadow:
+    0 0 0 1px rgba(59, 140, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
 /* -----------------------------------------------------------------------
    Símbolos PlayStation flutuantes — puramente decorativos (ver
    components/FloatingSymbols.tsx). Cada símbolo tem a sua própria duração
