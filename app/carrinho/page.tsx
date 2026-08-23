@@ -7,6 +7,7 @@ import { useCartStore } from "@/lib/cart-store";
 import { useMounted } from "@/lib/use-mounted";
 import { formatPrice, CONDITION_LABELS } from "@/lib/format";
 import { calculateShippingCost, SHIPPING } from "@/lib/constants";
+import { CheckoutSteps } from "@/components/checkout/CheckoutSteps";
 
 export default function CarrinhoPage() {
   const { items, updateQuantity, removeItem, subtotal } = useCartStore();
@@ -34,7 +35,11 @@ export default function CarrinhoPage() {
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-bold">Carrinho de compras</h1>
 
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
+      <div className="mt-8">
+        <CheckoutSteps current="carrinho" />
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
         <div className="space-y-4">
           {items.map((item) => (
             <div key={item.productId} className="card flex gap-4 p-4">
@@ -98,7 +103,7 @@ export default function CarrinhoPage() {
             <span>{formatPrice(total)}</span>
           </div>
           <ButtonLink href="/checkout" className="mt-2 w-full">
-            Finalizar compra
+            Continuar para o checkout
           </ButtonLink>
         </div>
       </div>

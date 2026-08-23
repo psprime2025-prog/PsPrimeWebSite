@@ -9,8 +9,11 @@ import { getStripe } from "@/lib/stripe-client";
 import { formatPrice } from "@/lib/format";
 import { calculateShippingCost, SHIPPING } from "@/lib/constants";
 import { PaymentStep } from "@/components/checkout/PaymentStep";
+import { CheckoutSteps } from "@/components/checkout/CheckoutSteps";
+import { CardIcon } from "@/components/icons/InfoIcons";
 
 type PaymentMethod = "CARTAO" | "MULTIBANCO" | "MBWAY";
+type Step = "dados" | "pagamento" | "confirmar";
 
 interface FormState {
   guestName: string;
@@ -31,7 +34,7 @@ const PAYMENT_OPTIONS: { value: PaymentMethod; label: string; description: strin
 export default function CheckoutPage() {
   const { items, subtotal } = useCartStore();
   const mounted = useMounted();
-  const [step, setStep] = useState<"info" | "pagamento">("info");
+  const [step, setStep] = useState<Step>("dados");
   const [form, setForm] = useState<FormState>({
     guestName: "",
     guestEmail: "",
@@ -52,7 +55,12 @@ export default function CheckoutPage() {
 
   const stripePromise = useMemo(() => getStripe(), []);
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleDadosSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStep("pagamento");
+  }
+
+  async function handlePagamentoSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -74,7 +82,7 @@ export default function CheckoutPage() {
       }
       setClientSecret(data.clientSecret);
       setOrderId(data.orderId);
-      setStep("pagamento");
+      setStep("confirmar");
     } catch {
       setError("Erro de rede. Tenta novamente.");
     } finally {
@@ -84,7 +92,7 @@ export default function CheckoutPage() {
 
   if (!mounted) return null;
 
-  if (items.length === 0 && step === "info") {
+  if (items.length === 0 && step === "dados") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
         <h1 className="text-2xl font-bold">O teu carrinho está vazio</h1>
@@ -98,11 +106,19 @@ export default function CheckoutPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-bold">Checkout</h1>
+      <p className="mt-2 flex items-center gap-1.5 text-sm text-text-muted">
+        <CardIcon className="h-4 w-4 shrink-0 text-primary-light" />
+        Podes pagar com: Cartão · MB WAY · Multibanco
+      </p>
 
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
+      <div className="mt-8">
+        <CheckoutSteps current={step} />
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
         <div>
-          {step === "info" && (
-            <form onSubmit={handleSubmit} className="card space-y-5 p-6">
+          {step === "dados" && (
+            <form onSubmit={handleDadosSubmit} className="card space-y-5 p-6">
               <div>
                 <h2 className="mb-3 font-semibold">Dados de entrega</h2>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -167,6 +183,14 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
+              <Button type="submit" variant="primary" className="w-full">
+                Continuar para pagamento
+              </Button>
+            </form>
+          )}
+
+          {step === "pagamento" && (
+            <form onSubmit={handlePagamentoSubmit} className="card space-y-5 p-6">
               <div>
                 <h2 className="mb-3 font-semibold">Método de pagamento</h2>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -194,16 +218,30 @@ export default function CheckoutPage() {
 
               {error && <p className="text-sm text-red-400">{error}</p>}
 
-              <Button type="submit" disabled={loading} variant="primary" className="w-full">
-                {loading ? "A processar..." : "Continuar para pagamento"}
-              </Button>
+              <div className="flex gap-3">
+                <Button type="button" variant="secondary" onClick={() => setStep("dados")}>
+                  Voltar
+                </Button>
+                <Button type="submit" disabled={loading} variant="primary" className="flex-1">
+                  {loading ? "A processar..." : "Continuar para confirmação"}
+                </Button>
+              </div>
             </form>
           )}
 
-          {step === "pagamento" && clientSecret && orderId && (
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <PaymentStep orderId={orderId} paymentMethod={form.paymentMethod} total={total} />
-            </Elements>
+          {step === "confirmar" && clientSecret && orderId && (
+            <div className="space-y-4">
+              <div className="card p-6">
+                <h2 className="font-semibold">Confirmar e pagar</h2>
+                <p className="mt-1 text-sm text-text-muted">
+                  Revê o total e finaliza a tua compra.
+                </p>
+                <p className="mt-3 text-2xl font-bold text-primary-light">{formatPrice(total)}</p>
+              </div>
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <PaymentStep orderId={orderId} paymentMethod={form.paymentMethod} total={total} />
+              </Elements>
+            </div>
           )}
         </div>
 

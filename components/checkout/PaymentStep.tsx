@@ -142,7 +142,7 @@ export function PaymentStep({ orderId, paymentMethod, total }: Props) {
       <PaymentElement />
       {error && <p className="text-sm text-red-400">{error}</p>}
       <Button type="submit" disabled={!stripe || submitting} variant="primary" className="w-full">
-        {submitting ? "A processar..." : `Pagar ${total.toFixed(2)} €`}
+        {submitting ? "A processar..." : "Finalizar compra"}
       </Button>
     </form>
   );

@@ -78,6 +78,27 @@ export function LockIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function ControllerIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M7 9c-2.5 0-4 2-3.6 4.5l.4 2.2c.3 1.6 2.2 2.2 3.3 1l.6-.7a2 2 0 0 1 1.5-.7h5.6a2 2 0 0 1 1.5.7l.6.7c1.1 1.2 3 .6 3.3-1l.4-2.2C21 11 19.5 9 17 9Z" />
+      <path d="M8.5 12.5h2M9.5 11.5v2" />
+      <circle cx="16.5" cy="11.8" r="0.7" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="13.3" r="0.7" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function CardIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="2.5" y="5.5" width="19" height="13" rx="2" />
+      <path d="M2.5 9.5h19" />
+      <path d="M6 14.5h4" />
+    </svg>
+  );
+}
+
 export function UndoIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
