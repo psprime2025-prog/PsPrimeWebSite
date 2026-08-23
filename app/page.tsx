@@ -2,6 +2,7 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { ButtonLink } from "@/components/ui/Button";
 import { FloatingSymbols } from "@/components/FloatingSymbols";
+import { HeroTrustLine } from "@/components/HeroTrustLine";
 import { ConsolesForSale } from "@/components/home/ConsolesForSale";
 import { WhyBuy } from "@/components/home/WhyBuy";
 import { ProtectedPurchase } from "@/components/home/ProtectedPurchase";
@@ -49,11 +50,12 @@ export default async function HomePage() {
                 Vender consola
               </ButtonLink>
             </div>
+            <HeroTrustLine />
           </div>
 
           <div className="relative min-h-[320px] overflow-hidden rounded-card lg:min-h-[480px]">
             <Image
-              src="/hero.jpg"
+              src="/hero-photo.jpg"
               alt="PsPrime — universo PlayStation"
               fill
               priority
