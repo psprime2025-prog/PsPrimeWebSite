@@ -30,7 +30,7 @@ export function AddToCartForm(props: Props) {
 
   function handleBuyNow() {
     addItem(props, quantity);
-    router.push("/carrinho");
+    router.push("/checkout");
   }
 
   if (outOfStock) {
@@ -61,12 +61,12 @@ export function AddToCartForm(props: Props) {
         </select>
         <span className="text-xs text-text-muted">{props.stock} em stock</span>
       </div>
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <Button onClick={handleAdd} variant="secondary" className="flex-1">
-          {added ? "Adicionado ✓" : "Adicionar ao carrinho"}
-        </Button>
-        <Button onClick={handleBuyNow} variant="primary" className="flex-1">
+      <div className="flex flex-col items-stretch gap-2 sm:items-center">
+        <Button onClick={handleBuyNow} variant="primary" size="lg" className="w-full">
           Comprar agora
+        </Button>
+        <Button onClick={handleAdd} variant="outline" size="sm" className="sm:self-center">
+          {added ? "Adicionado ✓" : "+ Adicionar ao carrinho"}
         </Button>
       </div>
     </div>

@@ -189,6 +189,12 @@
   gap: 0.375rem;
 }
 
+.btn-glass--lg {
+  padding: 0.875rem 2rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
 /* Estado ativo (item de navegação da página atual) — some com qualquer variante. */
 .btn-glass--active {
   border-color: rgba(59, 140, 255, 0.55) !important;

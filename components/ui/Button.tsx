@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ButtonHTMLAttributes, ComponentProps, ReactNode } from "react";
 
 export type ButtonVariant = "primary" | "secondary" | "outline" | "light";
-export type ButtonSize = "md" | "sm";
+export type ButtonSize = "md" | "sm" | "lg";
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
   primary: "btn-glass btn-glass--primary",
@@ -14,6 +14,7 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
 const SIZE_CLASS: Record<ButtonSize, string> = {
   md: "",
   sm: "btn-glass--sm",
+  lg: "btn-glass--lg",
 };
 
 function cx(...classes: (string | undefined | false)[]) {
