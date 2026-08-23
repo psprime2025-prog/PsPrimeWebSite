@@ -1,0 +1,64 @@
+import { Resend } from "resend";
+import { prisma } from "@/lib/prisma";
+import { formatPrice, PAYMENT_METHOD_LABELS } from "@/lib/format";
+import { STORE } from "@/lib/constants";
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const FROM_EMAIL = process.env.EMAIL_FROM ?? "PsPrime <encomendas@psprime.pt>";
+
+export async function sendOrderConfirmationEmail(orderId: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY não configurada — email de confirmação não enviado.");
+    return;
+  }
+
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { items: true, address: true, payment: true },
+  });
+  if (!order) return;
+
+  const itemsHtml = order.items
+    .map(
+      (item) =>
+        `<tr><td style="padding:8px 0;">${item.productName} × ${item.quantity}</td><td style="padding:8px 0;text-align:right;">${formatPrice(item.subtotal)}</td></tr>`
+    )
+    .join("");
+
+  const multibancoHtml =
+    order.paymentMethod === "MULTIBANCO" && order.payment?.multibancoReference
+      ? `
+      <div style="margin-top:24px;padding:16px;border:1px solid #202733;border-radius:8px;">
+        <p style="margin:0 0 8px;font-weight:600;">Referência Multibanco</p>
+        <p style="margin:0;">Entidade: <strong>${order.payment.multibancoEntity}</strong></p>
+        <p style="margin:0;">Referência: <strong>${order.payment.multibancoReference}</strong></p>
+        <p style="margin:0;">Valor: <strong>${formatPrice(order.total)}</strong></p>
+        <p style="margin:8px 0 0;font-size:13px;color:#666;">Válida durante aproximadamente 7 dias.</p>
+      </div>`
+      : "";
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#111;">
+      <h2>Obrigado pela tua encomenda, ${order.guestName}!</h2>
+      <p>Recebemos a tua encomenda <strong>#${order.id.slice(-8).toUpperCase()}</strong>.</p>
+      <table style="width:100%;border-collapse:collapse;margin-top:16px;">
+        ${itemsHtml}
+        <tr><td style="padding-top:12px;font-weight:600;">Portes</td><td style="padding-top:12px;text-align:right;">${formatPrice(order.shippingCost)}</td></tr>
+        <tr><td style="padding-top:8px;font-weight:700;">Total</td><td style="padding-top:8px;text-align:right;font-weight:700;">${formatPrice(order.total)}</td></tr>
+      </table>
+      <p style="margin-top:16px;">Método de pagamento: ${PAYMENT_METHOD_LABELS[order.paymentMethod]}</p>
+      ${multibancoHtml}
+      <p style="margin-top:24px;">Morada de entrega: ${order.address?.street}, ${order.address?.postalCode} ${order.address?.city}</p>
+      <p style="margin-top:24px;font-size:13px;color:#666;">
+        Dúvidas? Contacta-nos em ${STORE.supportEmail} ou ${STORE.supportPhone}.
+      </p>
+    </div>
+  `;
+
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to: order.guestEmail,
+    subject: `Encomenda PsPrime #${order.id.slice(-8).toUpperCase()} confirmada`,
+    html,
+  });
+}

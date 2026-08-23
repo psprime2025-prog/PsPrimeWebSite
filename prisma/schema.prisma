@@ -1,0 +1,158 @@
+// Schema Prisma — PsPrime
+// Base de dados: PostgreSQL (Supabase)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Catálogo
+// ---------------------------------------------------------------------------
+
+enum PsGeneration {
+  PS1
+  PS2
+  PS3
+  PS4
+  PS5
+  NA // acessórios/produtos não específicos de uma geração
+}
+
+enum ProductCondition {
+  EXCELENTE
+  MUITO_BOM
+  BOM
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  order     Int       @default(0)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id            String           @id @default(cuid())
+  name          String
+  slug          String           @unique
+  description   String
+  price         Decimal          @db.Decimal(10, 2)
+  stock         Int              @default(0)
+  condition     ProductCondition
+  psGeneration  PsGeneration     @default(NA)
+  images        ProductImage[]
+  featured      Boolean          @default(false)
+  active        Boolean          @default(true)
+  category      Category         @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  orderItems    OrderItem[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([categoryId])
+  @@index([psGeneration])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String   @default("")
+  order     Int      @default(0)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+// ---------------------------------------------------------------------------
+// Encomendas
+// ---------------------------------------------------------------------------
+
+enum OrderStatus {
+  PENDENTE
+  PAGO
+  ENVIADO
+  ENTREGUE
+  CANCELADO
+}
+
+enum PaymentMethod {
+  CARTAO
+  MULTIBANCO
+  MBWAY
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  // userId fica pronto para contas de cliente numa fase futura — v1 é sempre checkout como convidado.
+  userId        String?
+  guestName     String
+  guestEmail    String
+  guestPhone    String
+  status        OrderStatus   @default(PENDENTE)
+  paymentMethod PaymentMethod
+  subtotal      Decimal       @db.Decimal(10, 2)
+  shippingCost  Decimal       @db.Decimal(10, 2)
+  total         Decimal       @db.Decimal(10, 2)
+  notes         String?
+  address       Address?
+  items         OrderItem[]
+  payment       Payment?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([guestEmail])
+  @@index([status])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  product     Product? @relation(fields: [productId], references: [id])
+  productId   String?
+  productName String // snapshot do nome no momento da compra
+  unitPrice   Decimal  @db.Decimal(10, 2) // snapshot do preço
+  quantity    Int
+  subtotal    Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now())
+
+  @@index([orderId])
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId    String   @unique
+  street     String
+  postalCode String
+  city       String
+  country    String   @default("Portugal")
+  createdAt  DateTime @default(now())
+}
+
+model Payment {
+  id                    String    @id @default(cuid())
+  order                 Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId               String    @unique
+  stripePaymentIntentId String    @unique
+  status                String
+  method                PaymentMethod
+  amount                Decimal   @db.Decimal(10, 2)
+  currency              String    @default("eur")
+  multibancoEntity      String?
+  multibancoReference   String?
+  multibancoExpiresAt   DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
