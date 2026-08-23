@@ -5,6 +5,14 @@ import { ProductCard } from "@/components/ProductCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { FloatingSymbols } from "@/components/FloatingSymbols";
 import { CATEGORIES_SEED } from "@/lib/constants";
+import { ConsoleIcon, ControllerIcon, DiscIcon, AccessoryIcon } from "@/components/icons/CategoryIcons";
+
+const CATEGORY_ICONS: Record<string, typeof ConsoleIcon> = {
+  consolas: ConsoleIcon,
+  comandos: ControllerIcon,
+  jogos: DiscIcon,
+  acessorios: AccessoryIcon,
+};
 
 export const dynamic = "force-dynamic";
 
@@ -58,10 +66,12 @@ export default async function HomePage() {
           </div>
 
           <div className="relative min-h-[320px] overflow-hidden rounded-card lg:min-h-[480px]">
-            {/* TODO: substituir por uma fotografia real da PsPrime (produto, equipa ou loja) */}
+            {/* Ilustração de marca — substituir por uma fotografia real da PsPrime
+                (produto, equipa ou loja) assim que estiver disponível: basta
+                trocar o ficheiro public/hero.jpg, sem alterar código. */}
             <Image
               src="/hero.jpg"
-              alt="Consolas e acessórios PlayStation PsPrime"
+              alt="PsPrime — universo PlayStation"
               fill
               priority
               className="object-cover"
@@ -78,15 +88,23 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <h2 className="mb-6 text-xl font-bold">Categorias</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {CATEGORIES_SEED.map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/catalogo?categoria=${cat.slug}`}
-              className="card flex aspect-square flex-col items-center justify-center gap-2 p-4 text-center transition-colors hover:border-primary/50"
-            >
-              <span className="font-semibold">{cat.name}</span>
-            </Link>
-          ))}
+          {CATEGORIES_SEED.map((cat) => {
+            const Icon = CATEGORY_ICONS[cat.slug];
+            return (
+              <Link
+                key={cat.slug}
+                href={`/catalogo?categoria=${cat.slug}`}
+                className="card group flex aspect-square flex-col items-center justify-center gap-3 p-4 text-center transition-colors hover:border-primary/50"
+              >
+                {Icon && (
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-text-muted transition-colors group-hover:border-primary/50 group-hover:text-primary-light">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                )}
+                <span className="font-semibold">{cat.name}</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
