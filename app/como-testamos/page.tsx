@@ -1,33 +1,48 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
-import { CheckIcon } from "@/components/icons/InfoIcons";
+import {
+  CheckIcon,
+  ControllerIcon,
+  ThermometerIcon,
+  DiscIcon,
+  WifiIcon,
+  SparkleIcon,
+  WrenchIcon,
+} from "@/components/icons/InfoIcons";
 import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 export const metadata: Metadata = { title: "Como testamos" };
 
 const STEPS = [
   {
-    title: "Verificação inicial",
-    description: "Inspeção visual e funcional a todo o produto, por dentro e por fora.",
+    title: "Recebemos",
+    description: "A consola chega à nossa equipa e entra no processo de preparação.",
   },
   {
-    title: "Testes específicos",
-    description:
-      "Consoante o produto: comando, ecrã, leitor de discos, Wi-Fi/Bluetooth, armazenamento ou bateria.",
+    title: "Testamos",
+    description: "Verificação funcional completa — comando, temperatura, leitor e conectividade.",
   },
   {
-    title: "Reparação, quando necessário",
-    description: "A nossa equipa faz reparações técnicas reais antes de continuar o processo.",
+    title: "Preparamos",
+    description: "Limpamos e reparamos o que for necessário, com reparações técnicas reais.",
   },
   {
-    title: "Limpeza e classificação",
-    description:
-      "Limpamos o produto e atribuímos um grau de condição honesto: Excelente, Muito Bom ou Bom.",
+    title: "Classificamos",
+    description: "Atribuímos um grau de condição honesto: Excelente, Muito Bom ou Bom.",
   },
   {
-    title: "Verificação final",
-    description: "Última confirmação de que está tudo a funcionar corretamente antes do envio.",
+    title: "Enviamos",
+    description: "Última verificação e envio seguro, rastreável, em 24–48h.",
   },
+];
+
+const CHECKS = [
+  { icon: ControllerIcon, label: "Testamos o comando" },
+  { icon: ThermometerIcon, label: "Verificamos temperatura" },
+  { icon: DiscIcon, label: "Testamos leitor" },
+  { icon: WifiIcon, label: "Testamos conectividade" },
+  { icon: SparkleIcon, label: "Limpamos" },
+  { icon: WrenchIcon, label: "Reparamos quando necessário" },
 ];
 
 export default function ComoTestamosPage() {
@@ -54,7 +69,21 @@ export default function ComoTestamosPage() {
         ))}
       </ol>
 
-      <div className="card mt-10 space-y-2 p-6">
+      <div className="mt-10">
+        <p className="mb-3 text-sm text-text-muted">
+          O que &ldquo;testado e recondicionado&rdquo; significa, na prática:
+        </p>
+        <div className="grid grid-cols-2 gap-3">
+          {CHECKS.map(({ icon: Icon, label }) => (
+            <div key={label} className="card flex items-center gap-2.5 p-3 text-sm">
+              <Icon className="h-4 w-4 shrink-0 text-primary-light" />
+              {label}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="card mt-8 space-y-2 p-6">
         <div className="flex items-center gap-2.5 text-sm">
           <CheckIcon className="h-4 w-4 shrink-0 text-success" />
           Garantia legal em todos os produtos

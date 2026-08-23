@@ -7,10 +7,9 @@ export function SellTeaser() {
       <div className="card relative flex flex-col items-start gap-4 overflow-hidden p-8 sm:flex-row sm:items-center sm:justify-between">
         <FloatingSymbolsCompact />
         <div className="relative">
-          <h2 className="text-2xl font-bold">Vender a minha consola</h2>
+          <h2 className="text-2xl font-bold">Tens uma PlayStation parada?</h2>
           <p className="mt-2 max-w-lg text-sm text-text-muted">
-            Diz-nos o que tens para vender e enviamos-te uma proposta de avaliação. Sem
-            compromisso — a decisão é sempre tua.
+            Descobre quanto vale. Sem compromisso — a decisão é sempre tua.
           </p>
         </div>
         <ButtonLink href="/vender" variant="primary" className="relative shrink-0">

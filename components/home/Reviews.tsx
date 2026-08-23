@@ -4,7 +4,7 @@ export function Reviews() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-8 max-w-2xl">
-        <h2 className="text-2xl font-bold">Avaliações de clientes</h2>
+        <h2 className="text-2xl font-bold">Clientes reais</h2>
         <p className="mt-2 text-sm text-text-muted">
           Ainda estamos a recolher as primeiras avaliações reais de quem comprou na PsPrime.
         </p>

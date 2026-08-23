@@ -133,3 +133,58 @@ export function StarIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function ThermometerIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 14.5V5a2 2 0 1 0-4 0v9.5a3.5 3.5 0 1 0 4 0Z" />
+      <circle cx="10" cy="16.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function DiscIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="2.4" />
+    </svg>
+  );
+}
+
+export function WifiIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M4 9.5a12 12 0 0 1 16 0" />
+      <path d="M7 13a7.5 7.5 0 0 1 10 0" />
+      <path d="M10 16.5a3 3 0 0 1 4 0" />
+      <circle cx="12" cy="19" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function SparkleIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M11 4v3M11 15v3M4 11h3M15 11h3M6 6l2 2M14 14l2 2M16 6l-2 2M8 14l-2 2" />
+      <circle cx="11" cy="11" r="2.2" />
+    </svg>
+  );
+}
+
+export function WrenchIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M14.5 6.5a4 4 0 0 0-5.3 4.6L4 16.3V20h3.7l5.2-5.2a4 4 0 0 0 4.6-5.3l-2.7 2.7-2-2Z" />
+    </svg>
+  );
+}
+
+export function WhatsAppIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M6.5 17.5 4 20l2.6-2.5A8 8 0 1 1 9.5 19Z" />
+      <path d="M8.5 9.5c0 3 2 5 5 5 .5 0 1-.5.7-1l-.7-1.3-1.3.3a4 4 0 0 1-2.7-2.7l.3-1.3-1.3-.7c-.5-.3-1 .2-1 .7Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

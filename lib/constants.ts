@@ -12,6 +12,7 @@ export const STORE = {
   },
   supportEmail: "psprime2025@gmail.com",
   supportPhone: "961 916 668",
+  whatsappUrl: "https://wa.me/351961916668",
 } as const;
 
 // Portes de envio — valor fixo inicial (ajustável mais tarde por escalões de peso/valor).

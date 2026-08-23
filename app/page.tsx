@@ -5,12 +5,11 @@ import { HeroCTAs } from "@/components/HeroCTAs";
 import { HeroTrustLine } from "@/components/HeroTrustLine";
 import { ConsolesForSale } from "@/components/home/ConsolesForSale";
 import { TrustHighlight } from "@/components/home/TrustHighlight";
-import { WhyBuy } from "@/components/home/WhyBuy";
-import { ProtectedPurchase } from "@/components/home/ProtectedPurchase";
+import { HowWePrepare } from "@/components/home/HowWePrepare";
 import { SellTeaser } from "@/components/home/SellTeaser";
-import { ValuationSteps } from "@/components/home/ValuationSteps";
 import { Reviews } from "@/components/home/Reviews";
 import { FaqTeaser } from "@/components/home/FaqTeaser";
+import { AboutBlurb } from "@/components/home/AboutBlurb";
 
 export const dynamic = "force-dynamic";
 
@@ -68,12 +67,11 @@ export default async function HomePage() {
 
       <ConsolesForSale products={consoles.map((p) => ({ ...p, price: p.price.toString() }))} />
       <TrustHighlight />
-      <WhyBuy />
-      <ProtectedPurchase />
+      <HowWePrepare />
       <SellTeaser />
-      <ValuationSteps />
       <Reviews />
       <FaqTeaser />
+      <AboutBlurb />
     </div>
   );
 }
