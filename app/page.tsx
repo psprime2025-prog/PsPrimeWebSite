@@ -66,9 +66,6 @@ export default async function HomePage() {
           </div>
 
           <div className="relative min-h-[320px] overflow-hidden rounded-card lg:min-h-[480px]">
-            {/* Ilustração de marca — substituir por uma fotografia real da PsPrime
-                (produto, equipa ou loja) assim que estiver disponível: basta
-                trocar o ficheiro public/hero.jpg, sem alterar código. */}
             <Image
               src="/hero.jpg"
               alt="PsPrime — universo PlayStation"
