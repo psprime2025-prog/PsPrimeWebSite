@@ -1,42 +1,28 @@
-import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import { ProductCard } from "@/components/ProductCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { FloatingSymbols } from "@/components/FloatingSymbols";
-import { CATEGORIES_SEED } from "@/lib/constants";
-import { ConsoleIcon, ControllerIcon, DiscIcon, AccessoryIcon } from "@/components/icons/CategoryIcons";
-
-const CATEGORY_ICONS: Record<string, typeof ConsoleIcon> = {
-  consolas: ConsoleIcon,
-  comandos: ControllerIcon,
-  jogos: DiscIcon,
-  acessorios: AccessoryIcon,
-};
+import { ConsolesForSale } from "@/components/home/ConsolesForSale";
+import { WhyBuy } from "@/components/home/WhyBuy";
+import { ProtectedPurchase } from "@/components/home/ProtectedPurchase";
+import { SellTeaser } from "@/components/home/SellTeaser";
+import { ValuationSteps } from "@/components/home/ValuationSteps";
+import { Reviews } from "@/components/home/Reviews";
+import { FaqTeaser } from "@/components/home/FaqTeaser";
 
 export const dynamic = "force-dynamic";
 
-async function getFeaturedProducts() {
+async function getConsoles() {
   return prisma.product.findMany({
-    where: { active: true, featured: true },
+    where: { active: true, category: { slug: "consolas" } },
     include: { images: { orderBy: { order: "asc" }, take: 1 } },
-    orderBy: { createdAt: "desc" },
-    take: 8,
-  });
-}
-
-async function getLatestProducts() {
-  return prisma.product.findMany({
-    where: { active: true },
-    include: { images: { orderBy: { order: "asc" }, take: 1 } },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
     take: 8,
   });
 }
 
 export default async function HomePage() {
-  const [featured, latest] = await Promise.all([getFeaturedProducts(), getLatestProducts()]);
-  const highlighted = featured.length > 0 ? featured : latest;
+  const consoles = await getConsoles();
 
   return (
     <div>
@@ -82,55 +68,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <h2 className="mb-6 text-xl font-bold">Categorias</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {CATEGORIES_SEED.map((cat) => {
-            const Icon = CATEGORY_ICONS[cat.slug];
-            return (
-              <Link
-                key={cat.slug}
-                href={`/catalogo?categoria=${cat.slug}`}
-                className="card group flex aspect-square flex-col items-center justify-center gap-3 p-4 text-center transition-colors hover:border-primary/50"
-              >
-                {Icon && (
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-text-muted transition-colors group-hover:border-primary/50 group-hover:text-primary-light">
-                    <Icon className="h-6 w-6" />
-                  </span>
-                )}
-                <span className="font-semibold">{cat.name}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Destaques</h2>
-          <Link href="/catalogo" className="text-sm text-primary-light hover:underline">
-            Ver tudo
-          </Link>
-        </div>
-        {highlighted.length === 0 ? (
-          <p className="text-text-muted">
-            Ainda sem produtos publicados. Adiciona o primeiro produto no{" "}
-            <Link href="/admin/produtos" className="text-primary-light hover:underline">
-              painel de administração
-            </Link>
-            .
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {highlighted.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={{ ...product, price: product.price.toString() }}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      <ConsolesForSale products={consoles.map((p) => ({ ...p, price: p.price.toString() }))} />
+      <WhyBuy />
+      <ProtectedPurchase />
+      <SellTeaser />
+      <ValuationSteps />
+      <Reviews />
+      <FaqTeaser />
     </div>
   );
 }

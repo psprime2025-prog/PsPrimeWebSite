@@ -68,3 +68,20 @@ export function ClockIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function LockIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="4.5" y="11" width="15" height="9.5" rx="2" />
+      <path d="M7.5 11V8a4.5 4.5 0 0 1 9 0v3" />
+    </svg>
+  );
+}
+
+export function StarIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" {...props}>
+      <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8Z" />
+    </svg>
+  );
+}
