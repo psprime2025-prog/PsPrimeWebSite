@@ -7,6 +7,25 @@ function placeholder(label: string) {
   return `https://placehold.co/600x600/0B0F16/1677FF?text=${encodeURIComponent(label)}`;
 }
 
+const DEFAULTS_BY_CATEGORY: Record<string, { includedItems: string[]; testedChecks: string[] }> = {
+  consolas: {
+    includedItems: ["Consola", "Comando", "Cabo de alimentação", "Cabo HDMI"],
+    testedChecks: ["Comando", "Temperatura", "Leitor", "Wi-Fi/Bluetooth", "Armazenamento"],
+  },
+  comandos: {
+    includedItems: ["Comando", "Cabo USB de carregamento"],
+    testedChecks: ["Botões", "Analógicos", "Vibração", "Bateria"],
+  },
+  jogos: {
+    includedItems: ["Disco do jogo", "Caixa original"],
+    testedChecks: ["Leitura do disco", "Estado da caixa"],
+  },
+  acessorios: {
+    includedItems: ["Acessório", "Embalagem"],
+    testedChecks: ["Funcionamento geral"],
+  },
+};
+
 async function main() {
   console.log("A criar categorias...");
   const categories: Record<string, string> = {};
@@ -167,6 +186,7 @@ async function main() {
   ] as const;
 
   for (const p of products) {
+    const defaults = DEFAULTS_BY_CATEGORY[p.categorySlug];
     await prisma.product.upsert({
       where: { slug: p.slug },
       update: {},
@@ -182,6 +202,8 @@ async function main() {
         storageCapacity: p.storageCapacity,
         categoryId: categories[p.categorySlug],
         featured: p.featured,
+        includedItems: defaults?.includedItems ?? [],
+        testedChecks: defaults?.testedChecks ?? [],
         images: {
           create: [{ url: placeholder(p.image), alt: p.name, order: 0 }],
         },

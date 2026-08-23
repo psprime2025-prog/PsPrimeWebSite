@@ -23,6 +23,8 @@ interface ProductFormData {
   categoryId: string;
   featured: boolean;
   active: boolean;
+  includedItems: string[];
+  testedChecks: string[];
   images: { url: string }[];
 }
 
@@ -169,6 +171,29 @@ export function ProductForm({
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="label">Itens incluídos (um por linha)</label>
+          <textarea
+            name="includedItems"
+            rows={4}
+            defaultValue={product?.includedItems.join("\n")}
+            placeholder={"Consola\nComando DualSense\nCabo de alimentação\nCabo HDMI"}
+            className="input text-xs"
+          />
+        </div>
+        <div>
+          <label className="label">Testes realizados (um por linha)</label>
+          <textarea
+            name="testedChecks"
+            rows={4}
+            defaultValue={product?.testedChecks.join("\n")}
+            placeholder={"Comando\nTemperatura\nLeitor\nWi-Fi/Bluetooth\nArmazenamento"}
+            className="input text-xs"
+          />
+        </div>
       </div>
 
       <div>

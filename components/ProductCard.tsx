@@ -48,7 +48,10 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           <span className="badge-condition">{CONDITION_LABELS[product.condition]}</span>
         </div>
         <h3 className="line-clamp-2 text-sm font-medium text-text">{product.name}</h3>
-        <p className="mt-auto text-lg font-bold text-primary-light">{formatPrice(product.price)}</p>
+        <p className="text-lg font-bold text-primary-light">{formatPrice(product.price)}</p>
+        <span className="mt-auto text-xs text-text-muted transition-colors group-hover:text-primary-light">
+          Ver detalhes técnicos →
+        </span>
       </div>
     </Link>
   );

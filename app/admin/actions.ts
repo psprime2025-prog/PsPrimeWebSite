@@ -17,6 +17,13 @@ async function requireAdmin() {
 const DIACRITICS_RANGE_START = 0x0300;
 const DIACRITICS_RANGE_END = 0x036f;
 
+function parseLines(value: FormDataEntryValue | null) {
+  return String(value ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
 function slugify(text: string) {
   const withoutDiacritics = Array.from(text.normalize("NFD"))
     .filter((char) => {
@@ -49,6 +56,8 @@ export async function createProduct(formData: FormData) {
     .split("\n")
     .map((u) => u.trim())
     .filter(Boolean);
+  const includedItems = parseLines(formData.get("includedItems"));
+  const testedChecks = parseLines(formData.get("testedChecks"));
 
   await prisma.product.create({
     data: {
@@ -63,6 +72,8 @@ export async function createProduct(formData: FormData) {
       storageCapacity,
       categoryId,
       featured,
+      includedItems,
+      testedChecks,
       images: {
         create: imageUrls.map((url, i) => ({ url, order: i })),
       },
@@ -92,6 +103,8 @@ export async function updateProduct(productId: string, formData: FormData) {
     .split("\n")
     .map((u) => u.trim())
     .filter(Boolean);
+  const includedItems = parseLines(formData.get("includedItems"));
+  const testedChecks = parseLines(formData.get("testedChecks"));
 
   await prisma.$transaction([
     prisma.productImage.deleteMany({ where: { productId } }),
@@ -109,6 +122,8 @@ export async function updateProduct(productId: string, formData: FormData) {
         categoryId,
         featured,
         active,
+        includedItems,
+        testedChecks,
         images: {
           create: imageUrls.map((url, i) => ({ url, order: i })),
         },
