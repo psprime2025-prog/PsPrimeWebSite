@@ -4,6 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { FloatingSymbols } from "@/components/FloatingSymbols";
 import { HeroTrustLine } from "@/components/HeroTrustLine";
 import { ConsolesForSale } from "@/components/home/ConsolesForSale";
+import { TrustHighlight } from "@/components/home/TrustHighlight";
 import { WhyBuy } from "@/components/home/WhyBuy";
 import { ProtectedPurchase } from "@/components/home/ProtectedPurchase";
 import { SellTeaser } from "@/components/home/SellTeaser";
@@ -71,6 +72,7 @@ export default async function HomePage() {
       </section>
 
       <ConsolesForSale products={consoles.map((p) => ({ ...p, price: p.price.toString() }))} />
+      <TrustHighlight />
       <WhyBuy />
       <ProtectedPurchase />
       <SellTeaser />

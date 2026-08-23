@@ -78,6 +78,15 @@ export function LockIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function UndoIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M4.5 9h9.5a6 6 0 0 1 0 12h-2" />
+      <path d="M8.5 5 4.5 9l4 4" />
+    </svg>
+  );
+}
+
 export function StarIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" {...props}>
