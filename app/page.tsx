@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import { ButtonLink } from "@/components/ui/Button";
 import { FloatingSymbols } from "@/components/FloatingSymbols";
+import { HeroCTAs } from "@/components/HeroCTAs";
 import { HeroTrustLine } from "@/components/HeroTrustLine";
 import { ConsolesForSale } from "@/components/home/ConsolesForSale";
 import { TrustHighlight } from "@/components/home/TrustHighlight";
@@ -43,13 +43,8 @@ export default async function HomePage() {
               Consolas, comandos, jogos e acessórios de todas as gerações PlayStation, testados e
               recondicionados pela nossa equipa antes de chegarem até ti.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/catalogo" variant="primary">
-                Comprar consola já
-              </ButtonLink>
-              <ButtonLink href="/vender" variant="light">
-                Vender consola
-              </ButtonLink>
+            <div className="mt-8">
+              <HeroCTAs />
             </div>
             <HeroTrustLine />
           </div>

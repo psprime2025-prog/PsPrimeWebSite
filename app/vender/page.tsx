@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { STORE } from "@/lib/constants";
 import { ControllerIcon, PackageIcon } from "@/components/icons/InfoIcons";
+import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 const CONSOLE_OPTIONS = ["PS4", "PS4 Slim", "PS4 Pro", "PS5", "PS5 Slim", "PS5 Digital", "PS5 Pro", "Outra"];
 
@@ -167,8 +168,9 @@ export default function VenderPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold">Quanto vale a tua PlayStation?</h1>
+    <div className="relative mx-auto max-w-2xl overflow-hidden px-4 py-12 sm:px-6">
+      <FloatingSymbolsCompact />
+      <h1 className="relative text-3xl font-bold">Quanto vale a tua PlayStation?</h1>
       <p className="mt-2 text-lg text-primary-light">Descobre em menos de 1 minuto.</p>
       <p className="mt-3 text-text-muted">
         Envia-nos os dados e fazemos uma avaliação personalizada. Não damos um preço automático

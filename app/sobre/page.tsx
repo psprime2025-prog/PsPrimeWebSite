@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 export const metadata: Metadata = { title: "Sobre Nós" };
 
 export default function SobrePage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold">Sobre a PsPrime</h1>
+    <div className="relative mx-auto max-w-3xl overflow-hidden px-4 py-12 sm:px-6">
+      <FloatingSymbolsCompact />
+      <h1 className="relative text-3xl font-bold">Sobre a PsPrime</h1>
       <div className="mt-6 space-y-4 text-text-muted">
         <p>
           A PsPrime nasceu de uma paixão simples: dar uma segunda vida a consolas, comandos, jogos

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckIcon, ShieldIcon, TruckIcon, LockIcon } from "@/components/icons/InfoIcons";
+import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 const REASONS = [
   {
@@ -46,8 +47,9 @@ export function WhyBuy() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <h2 className="mb-2 text-2xl font-bold sm:mb-6">Por que comprar na PsPrime</h2>
+    <section className="relative mx-auto max-w-7xl overflow-hidden px-4 py-12 sm:px-6 lg:px-8">
+      <FloatingSymbolsCompact />
+      <h2 className="relative mb-2 text-2xl font-bold sm:mb-6">Por que comprar na PsPrime</h2>
 
       <div className="sm:hidden">
         {open ? (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
 import { CheckIcon } from "@/components/icons/InfoIcons";
+import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 export const metadata: Metadata = { title: "Como testamos" };
 
@@ -31,8 +32,9 @@ const STEPS = [
 
 export default function ComoTestamosPage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold">Como testamos</h1>
+    <div className="relative mx-auto max-w-2xl overflow-hidden px-4 py-12 sm:px-6">
+      <FloatingSymbolsCompact />
+      <h1 className="relative text-3xl font-bold">Como testamos</h1>
       <p className="mt-3 text-text-muted">
         Cada produto passa por este processo antes de chegar até ti — por isso preferimos
         chamar-lhes seminovos em vez de simplesmente &ldquo;usados&rdquo;.
