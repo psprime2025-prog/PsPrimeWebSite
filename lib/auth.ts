@@ -2,6 +2,21 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
+// Alguns painéis de hosting cortam/alteram o valor de variáveis de ambiente que
+// contenham "$" (interpretam como expansão de shell), o que parte um hash bcrypt
+// (formato "$2b$10$..."). Para evitar isso, ADMIN_PASSWORD_HASH pode ser guardado
+// em base64 (sem "$") — descodificamos aqui antes de comparar. Continua a aceitar
+// o hash bcrypt "cru" para quem preferir configurar assim.
+function resolveAdminPasswordHash(value: string): string {
+  if (value.startsWith("$2")) return value;
+  try {
+    const decoded = Buffer.from(value, "base64").toString("utf8");
+    return decoded.startsWith("$2") ? decoded : value;
+  } catch {
+    return value;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   pages: {
@@ -28,7 +43,10 @@ export const authOptions: NextAuthOptions = {
 
         if (credentials.email.toLowerCase() !== adminEmail.toLowerCase()) return null;
 
-        const valid = await bcrypt.compare(credentials.password, adminPasswordHash);
+        const valid = await bcrypt.compare(
+          credentials.password,
+          resolveAdminPasswordHash(adminPasswordHash)
+        );
         if (!valid) return null;
 
         return { id: "admin", email: adminEmail, name: "Administrador", role: "admin" };
