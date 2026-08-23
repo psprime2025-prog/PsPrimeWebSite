@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname, useSearchParams } from "next/navigation";
 import { CATEGORIES_SEED } from "@/lib/constants";
-import { SearchBar } from "@/components/SearchBar";
 import { useMounted } from "@/lib/use-mounted";
 
 const EXTRA_LINKS = [
-  { href: "/vender", label: "Vender consola" },
+  { href: "/faq", label: "FAQ" },
   { href: "/sobre", label: "Sobre Nós" },
   { href: "/contactos", label: "Contactos" },
 ];
@@ -80,11 +79,7 @@ export function MobileMenu() {
               </button>
             </div>
 
-            <div className="mt-5 sm:hidden">
-              <SearchBar />
-            </div>
-
-            <nav className="mt-6 space-y-1">
+            <nav className="mt-5 space-y-1">
               <Link
                 href="/catalogo"
                 className={`block rounded-xl px-3 py-2.5 font-medium transition-colors ${

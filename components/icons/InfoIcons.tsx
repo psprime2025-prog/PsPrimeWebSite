@@ -89,6 +89,24 @@ export function ControllerIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function SearchIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <line x1="20" y1="20" x2="15.3" y2="15.3" />
+    </svg>
+  );
+}
+
+export function TagIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M11.5 3.5H5a1.5 1.5 0 0 0-1.5 1.5v6.5a1.5 1.5 0 0 0 .44 1.06l9 9a1.5 1.5 0 0 0 2.12 0l6.5-6.5a1.5 1.5 0 0 0 0-2.12l-9-9a1.5 1.5 0 0 0-1.06-.44Z" />
+      <circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export function CardIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>

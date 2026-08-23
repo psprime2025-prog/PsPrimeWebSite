@@ -13,6 +13,7 @@ import { FAQS } from "@/lib/faq";
 import { AddToCartForm } from "@/components/AddToCartForm";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductGallery } from "@/components/ProductGallery";
+import { MobileExpandable } from "@/components/ui/MobileExpandable";
 import {
   CheckIcon,
   ShieldIcon,
@@ -61,7 +62,27 @@ export async function generateMetadata({
   };
 }
 
-function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionCard({
+  title,
+  children,
+  mobileSummary,
+  mobileExpandLabel,
+}: {
+  title: string;
+  children: React.ReactNode;
+  mobileSummary?: string;
+  mobileExpandLabel?: string;
+}) {
+  if (mobileSummary && mobileExpandLabel) {
+    return (
+      <section className="card p-5">
+        <MobileExpandable title={title} summary={mobileSummary} expandLabel={mobileExpandLabel}>
+          {children}
+        </MobileExpandable>
+      </section>
+    );
+  }
+
   return (
     <section className="card p-5">
       <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-text-muted">{title}</h2>
@@ -188,7 +209,11 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
             </div>
 
             {product.includedItems.length > 0 && (
-              <SectionCard title="O que recebes">
+              <SectionCard
+                title="O que recebes"
+                mobileSummary={`${product.includedItems.length} itens incluídos na compra.`}
+                mobileExpandLabel="Ver o que recebes"
+              >
                 <ul className="space-y-2">
                   {product.includedItems.map((item) => (
                     <li key={item} className="flex items-center gap-2.5 text-sm">
@@ -213,7 +238,11 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
             </SectionCard>
 
             {product.testedChecks.length > 0 && (
-              <SectionCard title="Testes realizados">
+              <SectionCard
+                title="Testes realizados"
+                mobileSummary="Testamos cada consola antes de enviar."
+                mobileExpandLabel={`Ver os ${product.testedChecks.length} testes`}
+              >
                 <ul className="grid grid-cols-2 gap-2.5">
                   {product.testedChecks.map((item) => (
                     <li key={item} className="flex items-center gap-2.5 text-sm">
@@ -225,7 +254,11 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
               </SectionCard>
             )}
 
-            <SectionCard title="Envio">
+            <SectionCard
+              title="Envio"
+              mobileSummary="Portugal, seguro e rastreável, em 24–48h."
+              mobileExpandLabel="Ver detalhes do envio"
+            >
               <ul className="grid grid-cols-2 gap-2.5">
                 <li className="flex items-center gap-2.5 text-sm">
                   <TruckIcon className="h-4 w-4 shrink-0 text-primary-light" />
