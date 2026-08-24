@@ -33,6 +33,21 @@ export const authOptions: NextAuthOptions = {
         const adminEmail = process.env.ADMIN_EMAIL;
         const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 
+        // DEBUG TEMPORÁRIO — diagnóstico do login de admin em produção. Não expõe
+        // a password nem o hash completo, só metadados (comprimento/prefixo) para
+        // detetar espaços/aspas a mais nas variáveis de ambiente. Remover depois.
+        console.log("[admin-auth-debug]", {
+          adminEmailSet: !!adminEmail,
+          adminEmailLength: adminEmail?.length,
+          adminEmailRaw: JSON.stringify(adminEmail),
+          adminPasswordHashSet: !!adminPasswordHash,
+          adminPasswordHashLength: adminPasswordHash?.length,
+          adminPasswordHashPrefix: adminPasswordHash?.slice(0, 6),
+          adminPasswordHashSuffix: adminPasswordHash?.slice(-6),
+          credentialsEmailRaw: JSON.stringify(credentials?.email),
+          credentialsPasswordLength: credentials?.password?.length,
+        });
+
         if (!adminEmail || !adminPasswordHash) {
           throw new Error(
             "Login de administração não configurado (ADMIN_EMAIL / ADMIN_PASSWORD_HASH em falta)."
@@ -41,12 +56,13 @@ export const authOptions: NextAuthOptions = {
 
         if (!credentials?.email || !credentials?.password) return null;
 
-        if (credentials.email.toLowerCase() !== adminEmail.toLowerCase()) return null;
+        const emailMatch = credentials.email.trim().toLowerCase() === adminEmail.trim().toLowerCase();
+        console.log("[admin-auth-debug] emailMatch:", emailMatch);
+        if (!emailMatch) return null;
 
-        const valid = await bcrypt.compare(
-          credentials.password,
-          resolveAdminPasswordHash(adminPasswordHash)
-        );
+        const resolvedHash = resolveAdminPasswordHash(adminPasswordHash.trim());
+        const valid = await bcrypt.compare(credentials.password, resolvedHash);
+        console.log("[admin-auth-debug] resolvedHashPrefix:", resolvedHash.slice(0, 6), "bcryptValid:", valid);
         if (!valid) return null;
 
         return { id: "admin", email: adminEmail, name: "Administrador", role: "admin" };
