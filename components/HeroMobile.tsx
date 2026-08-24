@@ -18,9 +18,16 @@ const TRUST_CARDS = [
   { icon: CameraIcon, title: "Estado real", subtitle: "Fotos reais do produto" },
 ];
 
+/* Altura da barra fixa de CTAs (ver MobileStickyCta) + margem de segurança,
+ * para o conteúdo do Hero nunca ficar escondido por baixo dela. */
+const STICKY_BAR_CLEARANCE = "calc(env(safe-area-inset-bottom) + 9rem)";
+
 export function HeroMobile() {
   return (
-    <div className="relative px-4 pb-8 pt-8 sm:px-6 md:hidden">
+    <div
+      className="relative px-4 pt-8 sm:px-6 md:hidden"
+      style={{ paddingBottom: STICKY_BAR_CLEARANCE }}
+    >
       <span className="badge-condition mb-5 inline-flex w-fit items-center gap-1.5 border-primary/40 bg-transparent text-primary-light">
         <ShieldIcon className="h-3.5 w-3.5" />
         Produtos seminovos testados
@@ -37,7 +44,15 @@ export function HeroMobile() {
         chegarem até ti.
       </p>
 
-      <div className="animate-fade-in-up relative mt-6 h-80 w-full sm:h-96">
+      <div
+        className="animate-fade-in-up relative mt-6 h-80 w-full sm:h-96"
+        style={{
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
+        }}
+      >
         <Image
           src="/hero-photo.png"
           alt="PsPrime — consola PlayStation testada e preparada"
