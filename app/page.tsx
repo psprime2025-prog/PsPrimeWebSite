@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { FloatingSymbols } from "@/components/FloatingSymbols";
 import { HeroCTAs } from "@/components/HeroCTAs";
 import { HeroTrustLine } from "@/components/HeroTrustLine";
+import { HeroMobile } from "@/components/HeroMobile";
 import { ConsolesForSale } from "@/components/home/ConsolesForSale";
 import { TrustHighlight } from "@/components/home/TrustHighlight";
 import { HowWePrepare } from "@/components/home/HowWePrepare";
@@ -29,7 +30,12 @@ export default async function HomePage() {
     <div>
       <section className="relative overflow-hidden border-b border-border bg-surface">
         <FloatingSymbols />
-        <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
+
+        {/* Hero mobile (<768px) — ver components/HeroMobile.tsx. Bloco desktop/tablet abaixo inalterado. */}
+        <HeroMobile />
+
+        {/* Hero desktop/tablet (>=768px) — inalterado, apenas passou de "grid" para "hidden md:grid" */}
+        <div className="relative mx-auto hidden max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 md:grid lg:grid-cols-2 lg:px-8">
           <div className="relative z-10 flex flex-col justify-center">
             <span className="badge-condition mb-4 inline-flex w-fit items-center gap-1.5 border-success/40 text-success">
               Produtos seminovos testados
