@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { useCartStore } from "@/lib/cart-store";
+import { CheckIcon } from "@/components/icons/InfoIcons";
 
 interface Props {
   productId: string;
@@ -66,7 +67,14 @@ export function AddToCartForm(props: Props) {
           Comprar agora
         </Button>
         <Button onClick={handleAdd} variant="outline" size="sm" className="sm:self-center">
-          {added ? "Adicionado ✓" : "+ Adicionar ao carrinho"}
+          {added ? (
+            <span className="inline-flex items-center gap-1.5">
+              <CheckIcon className="h-4 w-4 shrink-0" />
+              Adicionado
+            </span>
+          ) : (
+            "+ Adicionar ao carrinho"
+          )}
         </Button>
       </div>
     </div>

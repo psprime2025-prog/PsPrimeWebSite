@@ -1,12 +1,21 @@
+import {
+  ControllerIcon,
+  ThermometerIcon,
+  DiscIcon,
+  WifiIcon,
+  SparkleIcon,
+  WrenchIcon,
+} from "@/components/icons/InfoIcons";
+
 const PIPELINE = ["Recebemos", "Testamos", "Preparamos", "Classificamos", "Enviamos"];
 
 const CHECKS = [
-  { emoji: "🎮", title: "Comando", description: "Testamos sticks, botões e vibração." },
-  { emoji: "🌡️", title: "Temperatura", description: "Verificamos funcionamento e refrigeração." },
-  { emoji: "💿", title: "Leitor", description: "Testamos leitura de jogos." },
-  { emoji: "📶", title: "Conectividade", description: "Wi-Fi, Bluetooth e portas." },
-  { emoji: "🧹", title: "Limpeza", description: "Interior e exterior." },
-  { emoji: "🔧", title: "Reparação", description: "Quando necessário." },
+  { icon: ControllerIcon, title: "Comando", description: "Testamos sticks, botões e vibração." },
+  { icon: ThermometerIcon, title: "Temperatura", description: "Verificamos funcionamento e refrigeração." },
+  { icon: DiscIcon, title: "Leitor", description: "Testamos leitura de jogos." },
+  { icon: WifiIcon, title: "Conectividade", description: "Wi-Fi, Bluetooth e portas." },
+  { icon: SparkleIcon, title: "Limpeza", description: "Interior e exterior." },
+  { icon: WrenchIcon, title: "Reparação", description: "Quando necessário." },
 ];
 
 export function HowWePrepare() {
@@ -37,11 +46,9 @@ export function HowWePrepare() {
           O que &ldquo;testado e recondicionado&rdquo; significa, na prática:
         </p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {CHECKS.map(({ emoji, title, description }) => (
+          {CHECKS.map(({ icon: Icon, title, description }) => (
             <div key={title} className="card p-4">
-              <span className="text-xl" aria-hidden="true">
-                {emoji}
-              </span>
+              <Icon className="h-5 w-5 text-primary-light" />
               <p className="mt-2 text-sm font-semibold">{title}</p>
               <p className="mt-0.5 text-xs text-text-muted">{description}</p>
             </div>

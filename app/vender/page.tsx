@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { STORE } from "@/lib/constants";
-import { ControllerIcon, PackageIcon } from "@/components/icons/InfoIcons";
+import { ControllerIcon, PackageIcon, CheckIcon } from "@/components/icons/InfoIcons";
 import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 const CONSOLE_OPTIONS = ["PS4", "PS4 Slim", "PS4 Pro", "PS5", "PS5 Slim", "PS5 Digital", "PS5 Pro", "Outra"];
@@ -158,7 +158,7 @@ export default function VenderPage() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success">
-          ✓
+          <CheckIcon className="h-6 w-6" />
         </div>
         <h1 className="mt-4 text-2xl font-bold">Pedido enviado!</h1>
         <p className="mt-2 text-text-muted">

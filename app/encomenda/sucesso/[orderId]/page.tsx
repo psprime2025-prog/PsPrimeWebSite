@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { formatPrice, ORDER_STATUS_LABELS, PAYMENT_METHOD_LABELS } from "@/lib/format";
 import { ClearCartOnMount } from "@/components/checkout/ClearCartOnMount";
 import { ButtonLink } from "@/components/ui/Button";
+import { CheckIcon } from "@/components/icons/InfoIcons";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +30,7 @@ export default async function OrderSuccessPage({
       <ClearCartOnMount />
       <div className="text-center">
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success">
-          ✓
+          <CheckIcon className="h-6 w-6" />
         </div>
         <h1 className="mt-4 text-2xl font-bold">Encomenda recebida!</h1>
         <p className="mt-2 text-text-muted">
