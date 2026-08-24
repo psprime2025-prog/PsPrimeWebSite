@@ -44,17 +44,9 @@ export function HeroMobile() {
         chegarem até ti.
       </p>
 
-      <div
-        className="animate-fade-in-up relative mt-6 h-80 w-full sm:h-96"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
-        }}
-      >
+      <div className="animate-fade-in-up relative mt-6 h-80 w-full sm:h-96">
         <Image
-          src="/hero-photo.png"
+          src="/herophoto.png"
           alt="PsPrime — consola PlayStation testada e preparada"
           fill
           priority
