@@ -39,7 +39,7 @@ export function HeroMobile() {
 
       <div className="animate-fade-in-up relative mt-6 h-80 w-full sm:h-96">
         <Image
-          src="/hero-photo.jpg"
+          src="/hero-photo.png"
           alt="PsPrime — consola PlayStation testada e preparada"
           fill
           priority

@@ -57,7 +57,7 @@ export default async function HomePage() {
 
           <div className="relative min-h-[320px] overflow-hidden rounded-card lg:min-h-[480px]">
             <Image
-              src="/hero-photo.jpg"
+              src="/hero-photo.png"
               alt="PsPrime — universo PlayStation"
               fill
               priority
