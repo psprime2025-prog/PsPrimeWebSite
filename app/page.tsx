@@ -4,6 +4,7 @@ import { FloatingSymbols } from "@/components/FloatingSymbols";
 import { HeroCTAs } from "@/components/HeroCTAs";
 import { HeroTrustLine } from "@/components/HeroTrustLine";
 import { HeroMobile } from "@/components/HeroMobile";
+import { MobileStickyCta } from "@/components/MobileStickyCta";
 import { ConsolesForSale } from "@/components/home/ConsolesForSale";
 import { TrustHighlight } from "@/components/home/TrustHighlight";
 import { HowWePrepare } from "@/components/home/HowWePrepare";
@@ -78,6 +79,11 @@ export default async function HomePage() {
       <Reviews />
       <FaqTeaser />
       <AboutBlurb />
+
+      {/* Espaço para a barra de CTAs fixa (mobile) não tapar o rodapé */}
+      <div className="h-28 md:hidden" aria-hidden="true" />
+
+      <MobileStickyCta />
     </div>
   );
 }
