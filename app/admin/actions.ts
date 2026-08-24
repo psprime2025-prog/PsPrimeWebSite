@@ -57,6 +57,7 @@ export async function createProduct(formData: FormData) {
     .map((u) => u.trim())
     .filter(Boolean);
   const includedItems = parseLines(formData.get("includedItems"));
+  const notIncludedItems = parseLines(formData.get("notIncludedItems"));
   const testedChecks = parseLines(formData.get("testedChecks"));
 
   await prisma.product.create({
@@ -73,6 +74,7 @@ export async function createProduct(formData: FormData) {
       categoryId,
       featured,
       includedItems,
+      notIncludedItems,
       testedChecks,
       images: {
         create: imageUrls.map((url, i) => ({ url, order: i })),
@@ -104,6 +106,7 @@ export async function updateProduct(productId: string, formData: FormData) {
     .map((u) => u.trim())
     .filter(Boolean);
   const includedItems = parseLines(formData.get("includedItems"));
+  const notIncludedItems = parseLines(formData.get("notIncludedItems"));
   const testedChecks = parseLines(formData.get("testedChecks"));
 
   await prisma.$transaction([
@@ -123,6 +126,7 @@ export async function updateProduct(productId: string, formData: FormData) {
         featured,
         active,
         includedItems,
+        notIncludedItems,
         testedChecks,
         images: {
           create: imageUrls.map((url, i) => ({ url, order: i })),

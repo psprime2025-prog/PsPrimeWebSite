@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import {
   formatPrice,
+  shippingMessage,
   CONDITION_LABELS,
   CONDITION_DESCRIPTIONS,
   GENERATION_LABELS,
@@ -16,6 +17,7 @@ import { ProductGallery } from "@/components/ProductGallery";
 import { MobileExpandable } from "@/components/ui/MobileExpandable";
 import {
   CheckIcon,
+  CrossIcon,
   ShieldIcon,
   SupportIcon,
   TruckIcon,
@@ -24,6 +26,7 @@ import {
   ClockIcon,
   StarIcon,
   UndoIcon,
+  CardIcon,
 } from "@/components/icons/InfoIcons";
 
 export const dynamic = "force-dynamic";
@@ -154,53 +157,118 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
             <h1 className="mt-4 text-3xl font-bold">{product.name}</h1>
           </div>
 
-          <div className="flex items-center gap-1.5 text-sm font-medium text-text">
-            <StarIcon className="h-4 w-4 shrink-0 text-primary-light" />
-            {CONDITION_LABELS[product.condition]}
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <p className="text-3xl font-bold text-primary-light">{formatPrice(product.price)}</p>
-            <span
-              className={
-                inStock
-                  ? "badge-condition border-success/40 text-success"
-                  : "badge-condition text-text-muted"
-              }
-            >
-              {inStock ? "Em stock" : "Esgotado"}
-            </span>
-          </div>
-
-          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-text-muted">
-            <li className="flex items-center gap-1.5">
+          <div>
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="text-3xl font-bold text-primary-light">{formatPrice(product.price)}</p>
+              <span
+                className={
+                  inStock
+                    ? "badge-condition border-success/40 text-success"
+                    : "badge-condition text-text-muted"
+                }
+              >
+                {inStock ? "Em stock" : "Esgotado"}
+              </span>
+            </div>
+            <p className="mt-1.5 flex items-center gap-1.5 text-sm text-text-muted">
               <TruckIcon className="h-4 w-4 shrink-0 text-primary-light" />
-              Envio 24–48h
-            </li>
-            <li className="flex items-center gap-1.5">
-              <ShieldIcon className="h-4 w-4 shrink-0 text-primary-light" />
-              Garantia legal
-            </li>
-          </ul>
+              {shippingMessage(product.price)}
+            </p>
+          </div>
 
-          <p className="flex items-center gap-1.5 text-xs text-text-muted">
-            <UndoIcon className="h-3.5 w-3.5 shrink-0" />
-            14 dias para devolução —{" "}
-            <Link href="/legal/devolucoes" className="text-primary-light hover:underline">
-              Consulta as condições
-            </Link>
-            {"."}
-          </p>
+          <div>
+            <div className="flex items-center gap-1.5 text-sm font-medium text-text">
+              <StarIcon className="h-4 w-4 shrink-0 text-primary-light" />
+              {CONDITION_LABELS[product.condition]}
+            </div>
+            <p className="mt-1 text-sm text-text-muted">
+              {CONDITION_DESCRIPTIONS[product.condition]}
+            </p>
+          </div>
 
-          <AddToCartForm
-            productId={product.id}
-            name={product.name}
-            slug={product.slug}
-            price={Number(product.price)}
-            image={product.images[0]?.url ?? null}
-            condition={product.condition}
-            stock={product.stock}
-          />
+          {product.includedItems.length > 0 && (
+            <div>
+              <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+                O que inclui
+              </h2>
+              <ul className="space-y-1.5">
+                {product.includedItems.map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm">
+                    <CheckIcon className="h-4 w-4 shrink-0 text-success" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {product.notIncludedItems.length > 0 && (
+            <div>
+              <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+                Não inclui
+              </h2>
+              <ul className="space-y-1.5">
+                {product.notIncludedItems.map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-text-muted">
+                    <CrossIcon className="h-4 w-4 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {product.testedChecks.length > 0 && (
+            <div>
+              <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+                Testada
+              </h2>
+              <ul className="grid grid-cols-2 gap-2">
+                {product.testedChecks.map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm">
+                    <CheckIcon className="h-4 w-4 shrink-0 text-success" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div>
+            <AddToCartForm
+              productId={product.id}
+              name={product.name}
+              slug={product.slug}
+              price={Number(product.price)}
+              image={product.images[0]?.url ?? null}
+              condition={product.condition}
+              stock={product.stock}
+            />
+            <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-text-muted">
+              <span className="inline-flex items-center gap-1.5">
+                <ShieldIcon className="h-3.5 w-3.5 shrink-0" />
+                Garantia legal
+              </span>
+              <span className="text-border">·</span>
+              <Link
+                href="/legal/devolucoes"
+                className="inline-flex items-center gap-1.5 hover:text-primary-light hover:underline"
+              >
+                <UndoIcon className="h-3.5 w-3.5 shrink-0" />
+                Devolução 14 dias
+              </Link>
+              <span className="text-border">·</span>
+              <span className="inline-flex items-center gap-1.5">
+                <ClockIcon className="h-3.5 w-3.5 shrink-0" />
+                Envio 24–48h úteis
+              </span>
+              <span className="text-border">·</span>
+              <span className="inline-flex items-center gap-1.5">
+                <CardIcon className="h-3.5 w-3.5 shrink-0" />
+                Cartão · MB WAY · Multibanco
+              </span>
+            </p>
+          </div>
 
           <div className="space-y-6 border-t border-border pt-6">
             <div>
@@ -208,55 +276,9 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
               <p className="whitespace-pre-line text-sm text-text-muted">{product.description}</p>
             </div>
 
-            {product.includedItems.length > 0 && (
-              <SectionCard
-                title="O que recebes"
-                mobileSummary={`${product.includedItems.length} itens incluídos na compra.`}
-                mobileExpandLabel="Ver o que recebes"
-              >
-                <ul className="space-y-2">
-                  {product.includedItems.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 text-sm">
-                      <CheckIcon className="h-4 w-4 shrink-0 text-success" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </SectionCard>
-            )}
-
-            <SectionCard title="Estado do produto">
-              <div className="flex items-start gap-3">
-                <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-success" />
-                <div>
-                  <p className="font-semibold text-success">{CONDITION_LABELS[product.condition]}</p>
-                  <p className="mt-0.5 text-sm text-text-muted">
-                    {CONDITION_DESCRIPTIONS[product.condition]}
-                  </p>
-                </div>
-              </div>
-            </SectionCard>
-
-            {product.testedChecks.length > 0 && (
-              <SectionCard
-                title="Testes realizados"
-                mobileSummary="Testamos cada consola antes de enviar."
-                mobileExpandLabel={`Ver os ${product.testedChecks.length} testes`}
-              >
-                <ul className="grid grid-cols-2 gap-2.5">
-                  {product.testedChecks.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 text-sm">
-                      <CheckIcon className="h-4 w-4 shrink-0 text-success" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </SectionCard>
-            )}
-
             <SectionCard
               title="Envio"
-              mobileSummary="Portugal, seguro e rastreável, em 24–48h."
+              mobileSummary="Portugal, seguro e rastreável, em 24–48h úteis."
               mobileExpandLabel="Ver detalhes do envio"
             >
               <ul className="grid grid-cols-2 gap-2.5">
@@ -274,7 +296,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
                 </li>
                 <li className="flex items-center gap-2.5 text-sm">
                   <ClockIcon className="h-4 w-4 shrink-0 text-primary-light" />
-                  24–48h
+                  24–48h úteis
                 </li>
               </ul>
             </SectionCard>

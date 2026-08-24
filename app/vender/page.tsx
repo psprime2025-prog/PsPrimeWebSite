@@ -24,6 +24,8 @@ const ACOMPANHA_OPTIONS = [
 
 const TOTAL_STEPS = 5;
 
+const HOW_IT_WORKS = ["Envias os dados", "Analisamos", "Recebes a proposta", "Decides sem compromisso"];
+
 interface WizardData {
   consola: string;
   consolaOutra: string;
@@ -170,12 +172,29 @@ export default function VenderPage() {
   return (
     <div className="relative mx-auto max-w-2xl overflow-hidden px-4 py-12 sm:px-6">
       <FloatingSymbolsCompact />
-      <h1 className="relative text-3xl font-bold">Quanto vale a tua PlayStation?</h1>
-      <p className="mt-2 text-lg text-primary-light">Descobre em menos de 1 minuto.</p>
-      <p className="mt-3 text-text-muted">
-        Envia-nos os dados e fazemos uma avaliação personalizada. Não damos um preço automático
-        porque queremos considerar o estado real da tua consola.
+      <h1 className="relative text-3xl font-bold">Descobre quanto vale a tua PlayStation.</h1>
+      <p className="mt-2 text-lg text-primary-light">
+        Envia-nos alguns dados e recebe uma avaliação sem compromisso.
       </p>
+      <p className="mt-3 text-text-muted">
+        Não damos um preço automático porque queremos considerar o estado real da tua consola.
+      </p>
+
+      <div className="card relative mt-8 p-5">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+          Como funciona?
+        </h2>
+        <ol className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {HOW_IT_WORKS.map((step, i) => (
+            <li key={step} className="flex flex-col items-center gap-2 text-center text-sm">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-sm font-bold text-primary-light">
+                {i + 1}
+              </span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
 
       <div className="mt-8">
         {step === 1 && (

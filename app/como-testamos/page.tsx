@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
-import {
-  CheckIcon,
-  ControllerIcon,
-  ThermometerIcon,
-  DiscIcon,
-  WifiIcon,
-  SparkleIcon,
-  WrenchIcon,
-} from "@/components/icons/InfoIcons";
+import { CheckIcon } from "@/components/icons/InfoIcons";
 import { FloatingSymbolsCompact } from "@/components/FloatingSymbols";
 
 export const metadata: Metadata = { title: "Como testamos" };
@@ -32,17 +24,17 @@ const STEPS = [
   },
   {
     title: "Enviamos",
-    description: "Última verificação e envio seguro, rastreável, em 24–48h.",
+    description: "Última verificação e envio seguro, rastreável, em 24–48h úteis.",
   },
 ];
 
 const CHECKS = [
-  { icon: ControllerIcon, label: "Testamos o comando" },
-  { icon: ThermometerIcon, label: "Verificamos temperatura" },
-  { icon: DiscIcon, label: "Testamos leitor" },
-  { icon: WifiIcon, label: "Testamos conectividade" },
-  { icon: SparkleIcon, label: "Limpamos" },
-  { icon: WrenchIcon, label: "Reparamos quando necessário" },
+  { emoji: "🎮", title: "Comando", description: "Testamos sticks, botões e vibração." },
+  { emoji: "🌡️", title: "Temperatura", description: "Verificamos funcionamento e refrigeração." },
+  { emoji: "💿", title: "Leitor", description: "Testamos leitura de jogos." },
+  { emoji: "📶", title: "Conectividade", description: "Wi-Fi, Bluetooth e portas." },
+  { emoji: "🧹", title: "Limpeza", description: "Interior e exterior." },
+  { emoji: "🔧", title: "Reparação", description: "Quando necessário." },
 ];
 
 export default function ComoTestamosPage() {
@@ -74,10 +66,13 @@ export default function ComoTestamosPage() {
           O que &ldquo;testado e recondicionado&rdquo; significa, na prática:
         </p>
         <div className="grid grid-cols-2 gap-3">
-          {CHECKS.map(({ icon: Icon, label }) => (
-            <div key={label} className="card flex items-center gap-2.5 p-3 text-sm">
-              <Icon className="h-4 w-4 shrink-0 text-primary-light" />
-              {label}
+          {CHECKS.map(({ emoji, title, description }) => (
+            <div key={title} className="card p-3">
+              <span className="text-lg" aria-hidden="true">
+                {emoji}
+              </span>
+              <p className="mt-1.5 text-sm font-semibold">{title}</p>
+              <p className="mt-0.5 text-xs text-text-muted">{description}</p>
             </div>
           ))}
         </div>

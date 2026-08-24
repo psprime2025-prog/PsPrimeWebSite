@@ -17,6 +17,9 @@ export function TrustHighlight() {
           </span>
           <div>
             <p className="text-lg font-semibold">Não precisas apostar quando compras usado.</p>
+            <p className="mt-1 text-sm text-primary-light">
+              A consola que vês é a consola que recebes.
+            </p>
             <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-text-muted">
               {POINTS.map((point) => (
                 <li key={point} className="flex items-center gap-1.5">

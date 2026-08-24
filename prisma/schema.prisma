@@ -55,6 +55,7 @@ model Product {
   model         String? // ex: "Slim", "Pro", "Digital Edition" — depende da geração
   storageCapacity StorageCapacity?
   includedItems String[]         @default([])
+  notIncludedItems String[]      @default([])
   testedChecks  String[]         @default([])
   images        ProductImage[]
   featured      Boolean          @default(false)

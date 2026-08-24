@@ -24,16 +24,22 @@ export function ConsolesForSale({ products }: { products: ProductCardData[] }) {
         href={STORE.whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 flex items-center gap-3 rounded-card border border-border bg-surface/60 p-4 text-sm transition-colors hover:border-primary/40"
+        className="mt-6 flex flex-col gap-3 rounded-card border border-border bg-surface/60 p-4 text-sm transition-colors hover:border-primary/40 sm:flex-row sm:items-center"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary-light">
-          <WhatsAppIcon className="h-4 w-4" />
+        <span className="flex items-center gap-3">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary-light">
+            <WhatsAppIcon className="h-4 w-4" />
+          </span>
+          <span className="flex-1">
+            <span className="block font-medium text-text">Não sabes qual escolher?</span>
+            <span className="block text-text-muted">
+              Diz-nos o teu orçamento e o que procuras. Nós recomendamos uma consola para ti.
+            </span>
+          </span>
         </span>
-        <span className="flex-1">
-          <span className="block font-medium text-text">Não sabes qual escolher?</span>
-          <span className="block text-text-muted">Fala connosco. Nós ajudamos.</span>
+        <span className="shrink-0 text-sm font-medium text-primary-light sm:ml-3">
+          Falar no WhatsApp →
         </span>
-        <span className="shrink-0 text-sm font-medium text-primary-light">WhatsApp →</span>
       </a>
     </section>
   );

@@ -24,6 +24,7 @@ interface ProductFormData {
   featured: boolean;
   active: boolean;
   includedItems: string[];
+  notIncludedItems: string[];
   testedChecks: string[];
   images: { url: string }[];
 }
@@ -185,15 +186,26 @@ export function ProductForm({
           />
         </div>
         <div>
-          <label className="label">Testes realizados (um por linha)</label>
+          <label className="label">Não inclui (um por linha, opcional)</label>
           <textarea
-            name="testedChecks"
+            name="notIncludedItems"
             rows={4}
-            defaultValue={product?.testedChecks.join("\n")}
-            placeholder={"Comando\nTemperatura\nLeitor\nWi-Fi/Bluetooth\nArmazenamento"}
+            defaultValue={product?.notIncludedItems.join("\n")}
+            placeholder={"Caixa original\nJogo em disco"}
             className="input text-xs"
           />
         </div>
+      </div>
+
+      <div>
+        <label className="label">Testes realizados (um por linha)</label>
+        <textarea
+          name="testedChecks"
+          rows={4}
+          defaultValue={product?.testedChecks.join("\n")}
+          placeholder={"Comando\nTemperatura\nLeitor\nWi-Fi/Bluetooth\nArmazenamento"}
+          className="input text-xs"
+        />
       </div>
 
       <div>

@@ -1,9 +1,17 @@
+import { SHIPPING } from "@/lib/constants";
+
 export function formatPrice(value: number | string | { toString(): string }): string {
   const numeric = typeof value === "number" ? value : Number(value.toString());
   return new Intl.NumberFormat("pt-PT", {
     style: "currency",
     currency: "EUR",
   }).format(numeric);
+}
+
+export function shippingMessage(price: number | string | { toString(): string }): string {
+  const numeric = typeof price === "number" ? price : Number(price.toString());
+  if (numeric >= SHIPPING.freeShippingThreshold) return "Envio grátis";
+  return `Envio desde ${formatPrice(SHIPPING.flatRate)}`;
 }
 
 export function formatDate(value: Date | string): string {
