@@ -61,6 +61,7 @@ export default async function HomePage() {
               alt="PsPrime — universo PlayStation"
               fill
               priority
+              quality={95}
               className="object-contain"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />

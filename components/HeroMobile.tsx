@@ -91,6 +91,7 @@ export function HeroMobile() {
           alt="PsPrime — consola PlayStation testada e preparada"
           fill
           priority
+          quality={95}
           className="relative object-contain"
           sizes="100vw"
         />
