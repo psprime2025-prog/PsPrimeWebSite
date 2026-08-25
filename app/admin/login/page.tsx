@@ -26,14 +26,8 @@ function LoginForm() {
 
     setLoading(false);
 
-    // DEBUG TEMPORÁRIO — mostra o erro real do NextAuth em vez da mensagem
-    // genérica, para diagnosticar a falha de login em produção. Remover depois.
-    console.log("[admin-login-debug] signIn result:", result);
-
     if (result?.error) {
-      setError(
-        `Credenciais inválidas. [debug: error=${result.error} status=${result.status} ok=${result.ok}]`
-      );
+      setError("Credenciais inválidas.");
       return;
     }
 
