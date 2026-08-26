@@ -164,3 +164,31 @@ model Payment {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
+
+// ---------------------------------------------------------------------------
+// Pedidos de avaliação ("Vender consola")
+// ---------------------------------------------------------------------------
+
+enum SellRequestStatus {
+  NOVO
+  CONTACTADO
+  FECHADO
+}
+
+model SellRequest {
+  id              String            @id @default(cuid())
+  name            String
+  // O formulário atual só tem um campo de contacto único (email OU telemóvel);
+  // guardamos aqui o que for detetado, o outro fica por preencher.
+  email           String?
+  phone           String?
+  consoleModel    String
+  storageCapacity String?
+  condition       String
+  message         String?
+  status          SellRequestStatus @default(NOVO)
+  createdAt       DateTime          @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+}

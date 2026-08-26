@@ -9,6 +9,7 @@ const NAV = [
   { href: "/admin/produtos", label: "Produtos" },
   { href: "/admin/categorias", label: "Categorias" },
   { href: "/admin/encomendas", label: "Encomendas" },
+  { href: "/admin/avaliacoes", label: "Avaliações" },
 ];
 
 function AdminNav() {

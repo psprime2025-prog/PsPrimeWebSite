@@ -65,3 +65,9 @@ export const PAYMENT_METHOD_LABELS: Record<string, string> = {
   MULTIBANCO: "Multibanco",
   MBWAY: "MB WAY",
 };
+
+export const SELL_REQUEST_STATUS_LABELS: Record<string, string> = {
+  NOVO: "Novo",
+  CONTACTADO: "Contactado",
+  FECHADO: "Fechado",
+};

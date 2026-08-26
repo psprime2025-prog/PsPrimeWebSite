@@ -94,9 +94,9 @@ export async function sendSellRequestEmail(data: SellRequestData) {
 
   await resend.emails.send({
     from: FROM_EMAIL,
-    to: STORE.supportEmail,
+    to: process.env.ADMIN_EMAIL ?? STORE.supportEmail,
     replyTo: data.contacto.includes("@") ? data.contacto : undefined,
-    subject: `Pedido de avaliação: ${data.modelo}`,
+    subject: `Novo pedido de avaliação — ${data.nome}`,
     html,
     attachments: data.fotos.map((f) => ({
       filename: f.filename,

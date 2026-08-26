@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 import { sendSellRequestEmail } from "@/lib/email";
 
 const MAX_PHOTOS = 5;
@@ -34,14 +35,35 @@ export async function POST(request: NextRequest) {
     }))
   );
 
+  // O formulário só tem um campo de contacto único (email OU telemóvel) — guarda
+  // no campo certo consoante o formato, para ficar visível e útil no admin.
+  const isEmail = contacto.includes("@");
+
   try {
-    await sendSellRequestEmail({ nome, contacto, modelo, estado, mensagem, fotos });
+    await prisma.sellRequest.create({
+      data: {
+        name: nome,
+        email: isEmail ? contacto : null,
+        phone: isEmail ? null : contacto,
+        consoleModel: modelo,
+        condition: estado,
+        message: mensagem || null,
+      },
+    });
   } catch (err) {
-    console.error("Falha ao enviar pedido de avaliação:", err);
+    console.error("Falha ao guardar pedido de avaliação:", err);
     return NextResponse.json(
       { error: "Não foi possível enviar o pedido. Tenta novamente ou contacta-nos diretamente." },
       { status: 500 }
     );
+  }
+
+  try {
+    await sendSellRequestEmail({ nome, contacto, modelo, estado, mensagem, fotos });
+  } catch (err) {
+    // O pedido já ficou registado (visível no admin) mesmo que o email falhe —
+    // não bloqueia a resposta ao cliente por uma falha só de notificação.
+    console.error("Falha ao enviar email de notificação do pedido de avaliação:", err);
   }
 
   return NextResponse.json({ success: true });

@@ -5,7 +5,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import type { OrderStatus, ProductCondition, PsGeneration, StorageCapacity } from "@prisma/client";
+import type {
+  OrderStatus,
+  ProductCondition,
+  PsGeneration,
+  StorageCapacity,
+  SellRequestStatus,
+} from "@prisma/client";
 
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
@@ -165,4 +171,12 @@ export async function updateOrderStatus(orderId: string, formData: FormData) {
   await prisma.order.update({ where: { id: orderId }, data: { status } });
   revalidatePath("/admin/encomendas");
   revalidatePath(`/admin/encomendas/${orderId}`);
+}
+
+export async function updateSellRequestStatus(sellRequestId: string, formData: FormData) {
+  await requireAdmin();
+  const status = String(formData.get("status")) as SellRequestStatus;
+  await prisma.sellRequest.update({ where: { id: sellRequestId }, data: { status } });
+  revalidatePath("/admin/avaliacoes");
+  revalidatePath(`/admin/avaliacoes/${sellRequestId}`);
 }
