@@ -185,6 +185,9 @@ model SellRequest {
   consoleModel    String
   storageCapacity String?
   condition       String
+  // URLs públicos no Supabase Storage — fallback fiável para ver as fotos no
+  // admin mesmo que o email de notificação falhe.
+  photos          String[]          @default([])
   message         String?
   status          SellRequestStatus @default(NOVO)
   createdAt       DateTime          @default(now())

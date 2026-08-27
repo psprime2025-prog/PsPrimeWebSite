@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { formatDate, SELL_REQUEST_STATUS_LABELS } from "@/lib/format";
 import { updateSellRequestStatus } from "@/app/admin/actions";
@@ -45,6 +46,25 @@ export default async function AdminAvaliacaoPage({
             <div className="card p-6">
               <h2 className="mb-3 font-semibold">Mensagem do cliente</h2>
               <p className="whitespace-pre-line text-sm text-text-muted">{sellRequest.message}</p>
+            </div>
+          )}
+
+          {sellRequest.photos.length > 0 && (
+            <div className="card p-6">
+              <h2 className="mb-3 font-semibold">Fotos ({sellRequest.photos.length})</h2>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {sellRequest.photos.map((url) => (
+                  <a
+                    key={url}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative block aspect-square overflow-hidden rounded-card border border-border"
+                  >
+                    <Image src={url} alt="Foto enviada pelo cliente" fill className="object-cover" sizes="200px" />
+                  </a>
+                ))}
+              </div>
             </div>
           )}
         </div>
