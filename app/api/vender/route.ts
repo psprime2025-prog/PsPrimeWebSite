@@ -3,7 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { sendSellRequestEmail } from "@/lib/email";
 
 const MAX_PHOTOS = 5;
-const MAX_PHOTO_SIZE = 8 * 1024 * 1024; // 8MB
+// O Resend recusa emails com mais de ~40MB de anexos; os anexos vão em
+// base64 (~33% maior que o ficheiro original), por isso o limite aqui tem de
+// ficar bem abaixo disso. 5 fotos × 4MB = 20MB brutos ≈ 27MB em base64.
+const MAX_PHOTO_SIZE = 4 * 1024 * 1024; // 4MB por foto
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
@@ -24,7 +27,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: `Envia no máximo ${MAX_PHOTOS} fotos.` }, { status: 400 });
   }
   if (fotoFiles.some((f) => f.size > MAX_PHOTO_SIZE)) {
-    return NextResponse.json({ error: "Cada foto deve ter no máximo 8MB." }, { status: 400 });
+    return NextResponse.json(
+      { error: `Cada foto deve ter no máximo ${MAX_PHOTO_SIZE / (1024 * 1024)}MB.` },
+      { status: 400 }
+    );
   }
 
   const fotos = await Promise.all(
