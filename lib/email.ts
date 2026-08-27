@@ -4,7 +4,7 @@ import { formatPrice, PAYMENT_METHOD_LABELS } from "@/lib/format";
 import { STORE } from "@/lib/constants";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-const FROM_EMAIL = process.env.EMAIL_FROM ?? "PsPrime <encomendas@psprime.pt>";
+const FROM_EMAIL = process.env.EMAIL_FROM ?? "PsPrime <suporte@psprime.shop>";
 
 export async function sendOrderConfirmationEmail(orderId: string) {
   if (!resend) {
