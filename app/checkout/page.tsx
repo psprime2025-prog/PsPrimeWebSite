@@ -7,7 +7,7 @@ import { useCartStore } from "@/lib/cart-store";
 import { useMounted } from "@/lib/use-mounted";
 import { getStripe } from "@/lib/stripe-client";
 import { formatPrice } from "@/lib/format";
-import { calculateShippingCost, SHIPPING } from "@/lib/constants";
+import { calculateShippingCost } from "@/lib/constants";
 import { PaymentStep } from "@/components/checkout/PaymentStep";
 import { CheckoutSteps } from "@/components/checkout/CheckoutSteps";
 import { CardIcon } from "@/components/icons/InfoIcons";
@@ -261,13 +261,8 @@ export default function CheckoutPage() {
           </div>
           <div className="flex justify-between text-sm text-text-muted">
             <span>Portes</span>
-            <span>{shipping === 0 ? "Grátis" : formatPrice(shipping)}</span>
+            <span>Grátis</span>
           </div>
-          {shipping > 0 && (
-            <p className="text-xs text-text-muted">
-              Envio grátis a partir de {formatPrice(SHIPPING.freeShippingThreshold)}.
-            </p>
-          )}
           <div className="flex justify-between border-t border-border pt-3 text-lg font-bold">
             <span>Total</span>
             <span>{formatPrice(total)}</span>

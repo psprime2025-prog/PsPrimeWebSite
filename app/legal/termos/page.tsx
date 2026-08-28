@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
-import { STORE, SHIPPING } from "@/lib/constants";
+import { STORE } from "@/lib/constants";
 
 export const metadata: Metadata = { title: "Termos e Condições" };
 
@@ -43,17 +43,13 @@ export default function TermosPage() {
 
       <h2>4. Preços e pagamento</h2>
       <p>
-        Os preços apresentados incluem IVA à taxa legal em vigor e não incluem portes de envio,
-        salvo indicação em contrário. Aceitamos pagamento por Cartão de Crédito/Débito, Multibanco
-        e MB WAY, processados de forma segura através da Stripe. A referência Multibanco gerada é
-        válida durante aproximadamente 7 dias.
+        Os preços apresentados incluem IVA à taxa legal em vigor e portes de envio. Aceitamos
+        pagamento por Cartão de Crédito/Débito, Multibanco e MB WAY, processados de forma segura
+        através da Stripe. A referência Multibanco gerada é válida durante aproximadamente 7 dias.
       </p>
 
       <h2>5. Portes de envio</h2>
-      <p>
-        Portes fixos de {SHIPPING.flatRate.toFixed(2)} €, com envio gratuito para encomendas a
-        partir de {SHIPPING.freeShippingThreshold.toFixed(2)} €.
-      </p>
+      <p>Envio grátis em todas as encomendas, em todo o território português.</p>
 
       <h2>6. Direito de livre resolução (devolução)</h2>
       <p>

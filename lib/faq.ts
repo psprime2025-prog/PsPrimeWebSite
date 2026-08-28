@@ -1,5 +1,3 @@
-import { SHIPPING } from "@/lib/constants";
-
 export const FAQS = [
   {
     q: 'O que significa "produto seminovo"?',
@@ -19,7 +17,7 @@ export const FAQS = [
   },
   {
     q: "Quais são os custos de envio?",
-    a: `Portes fixos de ${SHIPPING.flatRate.toFixed(2)} €, com envio gratuito a partir de ${SHIPPING.freeShippingThreshold.toFixed(2)} €.`,
+    a: "Envio grátis em todas as encomendas, em todo o território português.",
   },
   {
     q: "Posso devolver um produto?",

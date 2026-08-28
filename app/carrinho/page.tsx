@@ -6,7 +6,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { useCartStore } from "@/lib/cart-store";
 import { useMounted } from "@/lib/use-mounted";
 import { formatPrice, CONDITION_LABELS } from "@/lib/format";
-import { calculateShippingCost, SHIPPING } from "@/lib/constants";
+import { calculateShippingCost } from "@/lib/constants";
 import { CheckoutSteps } from "@/components/checkout/CheckoutSteps";
 
 export default function CarrinhoPage() {
@@ -91,13 +91,8 @@ export default function CarrinhoPage() {
           </div>
           <div className="flex justify-between text-sm text-text-muted">
             <span>Portes de envio</span>
-            <span>{shipping === 0 ? "Grátis" : formatPrice(shipping)}</span>
+            <span>Grátis</span>
           </div>
-          {shipping > 0 && (
-            <p className="text-xs text-text-muted">
-              Envio grátis a partir de {formatPrice(SHIPPING.freeShippingThreshold)}.
-            </p>
-          )}
           <div className="flex justify-between border-t border-border pt-3 text-lg font-bold">
             <span>Total</span>
             <span>{formatPrice(total)}</span>

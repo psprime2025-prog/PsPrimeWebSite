@@ -172,7 +172,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ slug: 
             </div>
             <p className="mt-1.5 flex items-center gap-1.5 text-sm text-text-muted">
               <TruckIcon className="h-4 w-4 shrink-0 text-primary-light" />
-              {shippingMessage(product.price)}
+              {shippingMessage()}
             </p>
           </div>
 
