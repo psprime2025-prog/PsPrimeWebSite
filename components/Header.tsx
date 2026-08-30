@@ -6,8 +6,8 @@ import { Suspense, useState } from "react";
 import { CartButton } from "@/components/CartButton";
 import { SellButton } from "@/components/SellButton";
 import { SearchBar } from "@/components/SearchBar";
-import { CatalogMenu } from "@/components/CatalogMenu";
-import { MobileMenu } from "@/components/MobileMenu";
+import { HeaderNav } from "@/components/HeaderNav";
+import { HamburgerMenu } from "@/components/HamburgerMenu";
 import { SearchIcon } from "@/components/icons/InfoIcons";
 
 export function Header() {
@@ -21,9 +21,9 @@ export function Header() {
           <span className="hidden text-lg font-bold tracking-tight sm:block">PsPrime</span>
         </Link>
 
-        <nav className="hidden lg:flex">
+        <nav className="hidden items-center gap-2 lg:flex">
           <Suspense fallback={null}>
-            <CatalogMenu />
+            <HeaderNav />
           </Suspense>
         </nav>
 
@@ -34,7 +34,7 @@ export function Header() {
 
           <CartButton />
 
-          {/* Ações primárias mobile — Bloco I: Comprar (acima) · Vender · Pesquisar · Menu */}
+          {/* Ações rápidas mobile — Vender e Pesquisar (Comprar/Contacto ficam no menu ☰) */}
           <div className="flex items-center gap-2 sm:hidden">
             <SellButton />
             <button
@@ -49,7 +49,7 @@ export function Header() {
           </div>
 
           <Suspense fallback={null}>
-            <MobileMenu />
+            <HamburgerMenu />
           </Suspense>
         </div>
       </div>

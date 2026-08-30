@@ -8,12 +8,14 @@ import { CATEGORIES_SEED } from "@/lib/constants";
 import { useMounted } from "@/lib/use-mounted";
 
 const EXTRA_LINKS = [
+  { href: "/vender", label: "Vender" },
   { href: "/faq", label: "FAQ" },
   { href: "/sobre", label: "Sobre Nós" },
   { href: "/contactos", label: "Contactos" },
 ];
 
-export function MobileMenu() {
+/** Menu hamburger — abre o catálogo completo + links institucionais. Visível em todos os breakpoints. */
+export function HamburgerMenu() {
   const [open, setOpen] = useState(false);
   const mounted = useMounted();
   const pathname = usePathname();
@@ -44,7 +46,7 @@ export function MobileMenu() {
         onClick={() => setOpen(true)}
         aria-label="Abrir menu"
         aria-expanded={open}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors hover:bg-white/[0.06] lg:hidden"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors hover:bg-white/[0.06]"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
           <line x1="4" y1="7" x2="20" y2="7" />
@@ -56,7 +58,7 @@ export function MobileMenu() {
       {open &&
         mounted &&
         createPortal(
-          <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="fixed inset-0 z-50">
           <button
             type="button"
             aria-label="Fechar menu"
