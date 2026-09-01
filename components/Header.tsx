@@ -15,13 +15,13 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:grid lg:grid-cols-[auto_1fr_auto] lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image src="/logo.png" alt="PsPrime" width={40} height={40} priority className="rounded-full" />
           <span className="hidden text-lg font-bold tracking-tight sm:block">PsPrime</span>
         </Link>
 
-        <nav className="hidden items-center gap-2 lg:flex">
+        <nav className="hidden items-center justify-center gap-2 lg:flex">
           <Suspense fallback={null}>
             <HeaderNav />
           </Suspense>
