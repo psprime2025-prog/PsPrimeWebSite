@@ -33,7 +33,8 @@ interface WizardData {
   acompanha: string[];
   fotos: File[];
   nome: string;
-  contacto: string;
+  whatsapp: string;
+  email: string;
 }
 
 function StepShell({
@@ -109,7 +110,8 @@ export default function VenderPage() {
     acompanha: [],
     fotos: [],
     nome: "",
-    contacto: "",
+    whatsapp: "",
+    email: "",
   });
 
   function toggleAcompanha(value: string) {
@@ -123,7 +125,7 @@ export default function VenderPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!data.nome.trim() || !data.contacto.trim()) return;
+    if (!data.nome.trim() || !data.whatsapp.trim()) return;
 
     setStatus("loading");
     setError(null);
@@ -133,7 +135,8 @@ export default function VenderPage() {
 
     const formData = new FormData();
     formData.set("nome", data.nome.trim());
-    formData.set("contacto", data.contacto.trim());
+    formData.set("whatsapp", data.whatsapp.trim());
+    formData.set("email", data.email.trim());
     formData.set("modelo", modelo);
     formData.set("estado", data.estado);
     formData.set("mensagem", mensagem);
@@ -319,13 +322,24 @@ export default function VenderPage() {
                 />
               </div>
               <div>
-                <label className="label">WhatsApp ou email</label>
+                <label className="label">WhatsApp</label>
                 <input
                   required
+                  type="tel"
                   className="input"
-                  placeholder="email@exemplo.com ou 9XXXXXXXX"
-                  value={data.contacto}
-                  onChange={(e) => setData((d) => ({ ...d, contacto: e.target.value }))}
+                  placeholder="9XXXXXXXX"
+                  value={data.whatsapp}
+                  onChange={(e) => setData((d) => ({ ...d, whatsapp: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label className="label">Email (opcional)</label>
+                <input
+                  type="email"
+                  className="input"
+                  placeholder="email@exemplo.com"
+                  value={data.email}
+                  onChange={(e) => setData((d) => ({ ...d, email: e.target.value }))}
                 />
               </div>
 

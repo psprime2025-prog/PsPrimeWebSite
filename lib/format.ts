@@ -49,6 +49,7 @@ export const MODELS_BY_GENERATION: Record<string, string[]> = {
 };
 
 export const ORDER_STATUS_LABELS: Record<string, string> = {
+  LEAD: "Lead (sem pagamento)",
   PENDENTE: "Pendente",
   PAGO: "Pago",
   ENVIADO: "Enviado",

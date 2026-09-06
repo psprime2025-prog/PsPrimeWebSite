@@ -87,6 +87,7 @@ model ProductImage {
 // ---------------------------------------------------------------------------
 
 enum OrderStatus {
+  LEAD
   PENDENTE
   PAGO
   ENVIADO

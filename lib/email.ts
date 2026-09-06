@@ -72,7 +72,8 @@ export async function sendOrderConfirmationEmail(orderId: string) {
 
 interface SellRequestData {
   nome: string;
-  contacto: string;
+  whatsapp: string;
+  email: string;
   modelo: string;
   estado: string;
   mensagem: string;
@@ -89,11 +90,10 @@ export async function sendSellRequestEmail(data: SellRequestData) {
     return;
   }
 
-  const isEmail = data.contacto.includes("@");
-
   const rows = [
     sellRequestRow("Nome", data.nome),
-    isEmail ? sellRequestRow("Email", data.contacto) : sellRequestRow("Telefone", data.contacto),
+    sellRequestRow("WhatsApp", data.whatsapp),
+    ...(data.email ? [sellRequestRow("Email", data.email)] : []),
     sellRequestRow("Modelo", data.modelo),
     sellRequestRow("Estado (descrito pelo cliente)", data.estado),
   ].join("");
@@ -112,7 +112,7 @@ export async function sendSellRequestEmail(data: SellRequestData) {
   const { error } = await resend.emails.send({
     from: FROM_EMAIL,
     to: process.env.ADMIN_EMAIL ?? STORE.supportEmail,
-    replyTo: isEmail ? data.contacto : undefined,
+    replyTo: data.email || undefined,
     subject: `Nova proposta de avaliação — ${data.nome}`,
     html,
     attachments: data.fotos.map((f) => ({

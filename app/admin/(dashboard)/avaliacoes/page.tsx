@@ -32,7 +32,7 @@ export default async function AdminAvaliacoesPage() {
             {sellRequests.map((r) => (
               <tr key={r.id} className="border-b border-border last:border-0">
                 <td className="p-3">{r.name}</td>
-                <td className="p-3 text-text-muted">{r.email ?? r.phone}</td>
+                <td className="p-3 text-text-muted">{r.phone ?? r.email}</td>
                 <td className="p-3">{r.consoleModel}</td>
                 <td className="p-3 text-text-muted">{r.condition}</td>
                 <td className="p-3 text-text-muted">{formatDate(r.createdAt)}</td>

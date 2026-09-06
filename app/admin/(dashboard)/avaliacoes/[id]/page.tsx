@@ -29,8 +29,8 @@ export default async function AdminAvaliacaoPage({
           <div className="card p-6">
             <h2 className="mb-3 font-semibold">Cliente</h2>
             <p className="text-sm">{sellRequest.name}</p>
-            {sellRequest.email && <p className="text-sm text-text-muted">{sellRequest.email}</p>}
             {sellRequest.phone && <p className="text-sm text-text-muted">{sellRequest.phone}</p>}
+            {sellRequest.email && <p className="text-sm text-text-muted">{sellRequest.email}</p>}
           </div>
 
           <div className="card p-6">

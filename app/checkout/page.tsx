@@ -55,13 +55,49 @@ export default function CheckoutPage() {
 
   const stripePromise = useMemo(() => getStripe(), []);
 
-  function handleDadosSubmit(e: React.FormEvent) {
+  // Regista os dados pessoais assim que o cliente termina este passo — mesmo
+  // que desista antes de pagar, ficamos com o contacto (lead) para follow-up.
+  async function handleDadosSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setStep("pagamento");
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/checkout/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: orderId ?? undefined,
+          guestName: form.guestName,
+          guestEmail: form.guestEmail,
+          guestPhone: form.guestPhone,
+          street: form.street,
+          postalCode: form.postalCode,
+          city: form.city,
+          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error ?? "Não foi possível continuar. Verifica os dados e tenta novamente.");
+        setLoading(false);
+        return;
+      }
+      setOrderId(data.orderId);
+      setStep("pagamento");
+    } catch {
+      setError("Erro de rede. Tenta novamente.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handlePagamentoSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!orderId) {
+      setError("Ocorreu um erro. Volta ao passo anterior e tenta novamente.");
+      return;
+    }
     setLoading(true);
     setError(null);
 
@@ -69,10 +105,7 @@ export default function CheckoutPage() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
-        }),
+        body: JSON.stringify({ orderId, paymentMethod: form.paymentMethod }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -81,7 +114,6 @@ export default function CheckoutPage() {
         return;
       }
       setClientSecret(data.clientSecret);
-      setOrderId(data.orderId);
       setStep("confirmar");
     } catch {
       setError("Erro de rede. Tenta novamente.");
@@ -183,8 +215,10 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <Button type="submit" variant="primary" className="w-full">
-                Continuar para pagamento
+              {error && <p className="text-sm text-red-400">{error}</p>}
+
+              <Button type="submit" disabled={loading} variant="primary" className="w-full">
+                {loading ? "A continuar..." : "Continuar para pagamento"}
               </Button>
             </form>
           )}
@@ -219,7 +253,14 @@ export default function CheckoutPage() {
               {error && <p className="text-sm text-red-400">{error}</p>}
 
               <div className="flex gap-3">
-                <Button type="button" variant="secondary" onClick={() => setStep("dados")}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setError(null);
+                    setStep("dados");
+                  }}
+                >
                   Voltar
                 </Button>
                 <Button type="submit" disabled={loading} variant="primary" className="flex-1">

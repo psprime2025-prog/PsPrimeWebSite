@@ -37,12 +37,13 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData();
 
   const nome = String(formData.get("nome") ?? "").trim();
-  const contacto = String(formData.get("contacto") ?? "").trim();
+  const whatsapp = String(formData.get("whatsapp") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
   const modelo = String(formData.get("modelo") ?? "").trim();
   const estado = String(formData.get("estado") ?? "").trim();
   const mensagem = String(formData.get("mensagem") ?? "").trim();
 
-  if (!nome || !contacto || !modelo || !estado) {
+  if (!nome || !whatsapp || !modelo || !estado) {
     return NextResponse.json({ error: "Preenche todos os campos obrigatórios." }, { status: 400 });
   }
 
@@ -66,17 +67,13 @@ export async function POST(request: NextRequest) {
     }))
   );
 
-  // O formulário só tem um campo de contacto único (email OU telemóvel) — guarda
-  // no campo certo consoante o formato, para ficar visível e útil no admin.
-  const isEmail = contacto.includes("@");
-
   let sellRequestId: string;
   try {
     const sellRequest = await prisma.sellRequest.create({
       data: {
         name: nome,
-        email: isEmail ? contacto : null,
-        phone: isEmail ? null : contacto,
+        phone: whatsapp,
+        email: email || null,
         consoleModel: modelo,
         condition: estado,
         message: mensagem || null,
@@ -118,7 +115,7 @@ export async function POST(request: NextRequest) {
         contentType: "image/jpeg",
       }))
     );
-    await sendSellRequestEmail({ nome, contacto, modelo, estado, mensagem, fotos: fotosParaEmail });
+    await sendSellRequestEmail({ nome, whatsapp, email, modelo, estado, mensagem, fotos: fotosParaEmail });
   } catch (err) {
     // O pedido já ficou registado (visível no admin, fotos incluídas) mesmo
     // que o email falhe — não bloqueia a resposta ao cliente por uma falha
